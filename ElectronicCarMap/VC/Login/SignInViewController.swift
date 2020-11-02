@@ -26,10 +26,11 @@ class SignInViewController: UIViewController {
             Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
                 if(error == nil) {
                     let myUid = user?.user.uid
-                    let value = [
+                    var value: [String:Any] = [
                         "userName": name,
                         "userEmail": email,
-                        "uid": myUid!
+                        "uid": myUid!,
+//                        "favorite":"11"
                     ]
 
                     self.databaseRef.child("users").child(myUid!).setValue(value) { (error, ref) in
@@ -37,7 +38,6 @@ class SignInViewController: UIViewController {
                             self.dismiss(animated: true, completion: nil)
                         }
                     }
-                    
                 } else {
                     self.alert(message: "회원가입 오류")
                 }

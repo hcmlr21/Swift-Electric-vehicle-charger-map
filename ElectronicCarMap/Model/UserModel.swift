@@ -7,10 +7,21 @@
 //
 
 import Foundation
+//
+//class UserModel: NSObject {
+//    @objc var userEmail: String?
+//    @objc var userName: String?
+//    @objc var uid: String?
+//    @objc var favorite: [String]?
+//    var reservation: Bool?
+////    @objc var pushToken: String?
+//}
 
-class UserModel: NSObject {
-    @objc var userEmail: String?
-    @objc var userName: String?
-    @objc var uid: String?
+struct UserModel: Codable {
+    var userEmail: String?
+    var userName: String?
+    var uid: String?
+    var favorite: [String:String]?
+    var reservation: Bool?
 //    @objc var pushToken: String?
 }

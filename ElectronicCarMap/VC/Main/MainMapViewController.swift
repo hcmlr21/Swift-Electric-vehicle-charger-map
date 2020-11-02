@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import NMapsMap
+import Firebase
 
 class MainMapViewController: UIViewController, CLLocationManagerDelegate, searchPlaceDelegate {
     // MARK: - ProPerties
@@ -20,6 +21,8 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
     var hiddenViewLayouts: [NSLayoutConstraint] = []
     var shownViewLayouts: [NSLayoutConstraint] = []
     var baseUrl = "http://34.123.73.237:10010/chargerStation"
+    let databaseRef = Database.database().reference()
+    let myUid = Auth.auth().currentUser?.uid
     
     // MARK: - Methods
     func makeMap() {
@@ -49,7 +52,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         let hiddenViewLayout = self.naverMapView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         self.hiddenViewLayouts.append(hiddenViewLayout)
         
-        let shownViewLayout = self.naverMapView.bottomAnchor.constraint(equalTo: self.chargerInfoView.topAnchor, constant: 40)
+        let shownViewLayout = self.naverMapView.bottomAnchor.constraint(equalTo: self.chargerInfoView.topAnchor, constant: 30)
         self.shownViewLayouts.append(shownViewLayout)
         
         self.hideChargerInfoView()
@@ -101,11 +104,29 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
 //        @IBOutlet weak var statButton: UIButton!
 //        @IBOutlet weak var destinationButton: UIButton!
 //        @IBOutlet weak var infoCloseButton: UIButton!
+        
+        
+        self.databaseRef.child("users").child(self.myUid!).child("favorite").observe(.value) { (dataSnapShot) in
+            var check = false
+            for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
+                let statId = item.key
+                if statId == self.chargerStation?.statId {
+                    check = true
+                    break
+                }
+            }
+            
+            if check {
+                self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+            } else {
+                self.statFavoriteButton.imageView?.image = UIImage(named: "emptyStar")
+            }
+        }
+        
         self.statNameLabel.text = self.chargerStation?.statName
         self.statAddressLabel.text = self.chargerStation?.address
 //        self.statStatusLabel.text = self.chargerStation.
 //        self.statUseTimeLabel
-        
     }
     
     func showChargerInfoView() {
@@ -154,6 +175,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
     @IBOutlet weak var statButton: UIButton!
     @IBOutlet weak var destinationButton: UIButton!
     @IBOutlet weak var infoCloseButton: UIButton!
+    @IBOutlet weak var statFavoriteButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func touchUpSearchBarButton(_ sender: UIButton) {
@@ -179,6 +201,29 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         }
     }
     
+    @IBAction func touchUpFavoriteButton(_ sender: UIButton) {
+        self.databaseRef.child("users").child(self.myUid!).child("favorite").observeSingleEvent(of: .value, with: { (dataSnapShot) in
+            var check: Bool = false
+            for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
+                let statId = item.key
+                if statId == self.chargerStation?.statId {
+                    check = true
+                    break
+                }
+            }
+            
+            if check {
+                self.databaseRef.child("users").child(self.myUid!).child("favorite").child(self.chargerStation!.statId).removeValue()
+                self.statFavoriteButton.imageView?.image = UIImage(named: "emptyStar")
+            } else {
+                let value = [self.chargerStation?.statId:self.chargerStation?.statName]
+                self.databaseRef.child("users").child(self.myUid!).child("favorite").updateChildValues(value)
+                self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+            }
+        })
+    }
+    
+    
     
     // MARK: - Delegates And DataSource
     func onClikedChargerStation(chargerStation: ChargerStationModel) {
@@ -192,8 +237,19 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.chargerInfoView.isHidden = true
 //        self.naverMapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.databaseRef.child("users").child(self.myUid!).child("favorite").observe(.value) { (dataSnapShot) in
+            for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
+                let statId = item.key
+                if statId == self.chargerStation?.statId {
+                    self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+                    break
+                }
+            }
+        }
         
         self.requestUserLocationAllow()
         
