@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4802AF3D254EBED40059223E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4802AF3C254EBED40059223E /* GoogleService-Info.plist */; };
+		4855603D254C29C900668ACF /* MakingReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4855603C254C29C900668ACF /* MakingReservationViewController.swift */; };
+		4872399F254B9C7A00CF8294 /* PathFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */; };
+		487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487ED646254BA69E0004999D /* AddressSearchViewController.swift */; };
+		48BA03FF254FE382002C8FDE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BA03FE254FE382002C8FDE /* UserModel.swift */; };
+		48C84D6625456C9E00328ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D6525456C9E00328ADF /* AppDelegate.swift */; };
+		48C84D6825456C9E00328ADF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D6725456C9E00328ADF /* SceneDelegate.swift */; };
+		48C84D6D25456C9E00328ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48C84D6B25456C9E00328ADF /* Main.storyboard */; };
+		48C84D6F25456C9E00328ADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48C84D6E25456C9E00328ADF /* Assets.xcassets */; };
+		48C84D7225456C9E00328ADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48C84D7025456C9E00328ADF /* LaunchScreen.storyboard */; };
+		48C84D7A25456F1600328ADF /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D7925456F1600328ADF /* MainMapViewController.swift */; };
+		48C84D7D25456F3D00328ADF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D7C25456F3D00328ADF /* LoginViewController.swift */; };
+		48C84D7F25456F4600328ADF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D7E25456F4600328ADF /* SignInViewController.swift */; };
+		48C84D82254571B500328ADF /* ChargerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D81254571B500328ADF /* ChargerStationModel.swift */; };
+		48C84D84254573B700328ADF /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D83254573B700328ADF /* MyInfoViewController.swift */; };
+		48C84D862546F06200328ADF /* ChargerSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D852546F06200328ADF /* ChargerSearchViewController.swift */; };
+		48E54419254996F200A0E888 /* ChargerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E54418254996F200A0E888 /* ChargerInformationViewController.swift */; };
+		48E5442025499BC100A0E888 /* searchPlaceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E5441F25499BC100A0E888 /* searchPlaceDelegate.swift */; };
+		48F43F4E2548112B0090F5B8 /* reservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F43F4D2548112B0090F5B8 /* reservationViewController.swift */; };
+		48F43F50254811560090F5B8 /* favoriteChargersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F43F4F254811560090F5B8 /* favoriteChargersViewController.swift */; };
+		F681E64E4F8DD0F488553BD2 /* Pods_ElectronicCarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B06FB6AD8CE8912A9373A8 /* Pods_ElectronicCarMap.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3DFDCAD734931D09D887EDE6 /* Pods-ElectronicCarMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ElectronicCarMap.debug.xcconfig"; path = "Target Support Files/Pods-ElectronicCarMap/Pods-ElectronicCarMap.debug.xcconfig"; sourceTree = "<group>"; };
+		4802AF3C254EBED40059223E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		4832DB082549C36A00BCCAB9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4832DB0A2549C3F100BCCAB9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4832DB0C2549C41000BCCAB9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		4832DB0E2549C41B00BCCAB9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4832DB102549C42300BCCAB9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4855603C254C29C900668ACF /* MakingReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingReservationViewController.swift; sourceTree = "<group>"; };
+		4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFinderViewController.swift; sourceTree = "<group>"; };
+		487ED646254BA69E0004999D /* AddressSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchViewController.swift; sourceTree = "<group>"; };
+		48BA03FE254FE382002C8FDE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		48C84D6225456C9E00328ADF /* ElectronicCarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ElectronicCarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		48C84D6525456C9E00328ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		48C84D6725456C9E00328ADF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		48C84D6C25456C9E00328ADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		48C84D6E25456C9E00328ADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		48C84D7125456C9E00328ADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		48C84D7325456C9E00328ADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48C84D7925456F1600328ADF /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
+		48C84D7C25456F3D00328ADF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		48C84D7E25456F4600328ADF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		48C84D81254571B500328ADF /* ChargerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerStationModel.swift; sourceTree = "<group>"; };
+		48C84D83254573B700328ADF /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
+		48C84D852546F06200328ADF /* ChargerSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerSearchViewController.swift; sourceTree = "<group>"; };
+		48E54418254996F200A0E888 /* ChargerInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerInformationViewController.swift; sourceTree = "<group>"; };
+		48E5441F25499BC100A0E888 /* searchPlaceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchPlaceDelegate.swift; sourceTree = "<group>"; };
+		48F43F4D2548112B0090F5B8 /* reservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reservationViewController.swift; sourceTree = "<group>"; };
+		48F43F4F254811560090F5B8 /* favoriteChargersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = favoriteChargersViewController.swift; sourceTree = "<group>"; };
+		86A95F1827D8FAC55A3F5659 /* Pods-ElectronicCarMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ElectronicCarMap.release.xcconfig"; path = "Target Support Files/Pods-ElectronicCarMap/Pods-ElectronicCarMap.release.xcconfig"; sourceTree = "<group>"; };
+		A0B06FB6AD8CE8912A9373A8 /* Pods_ElectronicCarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ElectronicCarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		48C84D5F25456C9E00328ADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F681E64E4F8DD0F488553BD2 /* Pods_ElectronicCarMap.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		39A89708A5140C3AF4D3E0BA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3DFDCAD734931D09D887EDE6 /* Pods-ElectronicCarMap.debug.xcconfig */,
+				86A95F1827D8FAC55A3F5659 /* Pods-ElectronicCarMap.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		48C84D5925456C9E00328ADF = {
+			isa = PBXGroup;
+			children = (
+				48C84D6425456C9E00328ADF /* ElectronicCarMap */,
+				48C84D6325456C9E00328ADF /* Products */,
+				39A89708A5140C3AF4D3E0BA /* Pods */,
+				E4CCB91855AFF51C1AD896D6 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		48C84D6325456C9E00328ADF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D6225456C9E00328ADF /* ElectronicCarMap.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		48C84D6425456C9E00328ADF /* ElectronicCarMap */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D80254571A100328ADF /* Model */,
+				48C84D7B25456F2400328ADF /* VC */,
+				48C84D6525456C9E00328ADF /* AppDelegate.swift */,
+				48C84D6725456C9E00328ADF /* SceneDelegate.swift */,
+				48C84D6B25456C9E00328ADF /* Main.storyboard */,
+				48C84D6E25456C9E00328ADF /* Assets.xcassets */,
+				48C84D7025456C9E00328ADF /* LaunchScreen.storyboard */,
+				48C84D7325456C9E00328ADF /* Info.plist */,
+				4802AF3C254EBED40059223E /* GoogleService-Info.plist */,
+			);
+			path = ElectronicCarMap;
+			sourceTree = "<group>";
+		};
+		48C84D7B25456F2400328ADF /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				48E5441B2549978800A0E888 /* Login */,
+				48E5441A2549976700A0E888 /* Main */,
+				48E5441C2549979A00A0E888 /* Favorite */,
+				48E5441D254997B000A0E888 /* Reservation */,
+				48E5441E254997B200A0E888 /* MyInfo */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		48C84D80254571A100328ADF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D81254571B500328ADF /* ChargerStationModel.swift */,
+				48BA03FE254FE382002C8FDE /* UserModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		48E5441A2549976700A0E888 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D7925456F1600328ADF /* MainMapViewController.swift */,
+				48C84D852546F06200328ADF /* ChargerSearchViewController.swift */,
+				48E54418254996F200A0E888 /* ChargerInformationViewController.swift */,
+				48E5441F25499BC100A0E888 /* searchPlaceDelegate.swift */,
+				4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */,
+				487ED646254BA69E0004999D /* AddressSearchViewController.swift */,
+				4855603C254C29C900668ACF /* MakingReservationViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		48E5441B2549978800A0E888 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D7C25456F3D00328ADF /* LoginViewController.swift */,
+				48C84D7E25456F4600328ADF /* SignInViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		48E5441C2549979A00A0E888 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				48F43F4F254811560090F5B8 /* favoriteChargersViewController.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		48E5441D254997B000A0E888 /* Reservation */ = {
+			isa = PBXGroup;
+			children = (
+				48F43F4D2548112B0090F5B8 /* reservationViewController.swift */,
+			);
+			path = Reservation;
+			sourceTree = "<group>";
+		};
+		48E5441E254997B200A0E888 /* MyInfo */ = {
+			isa = PBXGroup;
+			children = (
+				48C84D83254573B700328ADF /* MyInfoViewController.swift */,
+			);
+			path = MyInfo;
+			sourceTree = "<group>";
+		};
+		E4CCB91855AFF51C1AD896D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4832DB102549C42300BCCAB9 /* SystemConfiguration.framework */,
+				4832DB0E2549C41B00BCCAB9 /* QuartzCore.framework */,
+				4832DB0C2549C41000BCCAB9 /* OpenGLES.framework */,
+				4832DB0A2549C3F100BCCAB9 /* CoreLocation.framework */,
+				4832DB082549C36A00BCCAB9 /* libsqlite3.tbd */,
+				A0B06FB6AD8CE8912A9373A8 /* Pods_ElectronicCarMap.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		48C84D6125456C9E00328ADF /* ElectronicCarMap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 48C84D7625456C9E00328ADF /* Build configuration list for PBXNativeTarget "ElectronicCarMap" */;
+			buildPhases = (
+				8B088E6EFEFAC4E22D34CFCA /* [CP] Check Pods Manifest.lock */,
+				48C84D5E25456C9E00328ADF /* Sources */,
+				48C84D5F25456C9E00328ADF /* Frameworks */,
+				48C84D6025456C9E00328ADF /* Resources */,
+				BB2F472A6AAEDD3CEABFC6DD /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ElectronicCarMap;
+			productName = ElectronicCarMap;
+			productReference = 48C84D6225456C9E00328ADF /* ElectronicCarMap.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		48C84D5A25456C9E00328ADF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1160;
+				LastUpgradeCheck = 1160;
+				ORGANIZATIONNAME = Jkookoo;
+				TargetAttributes = {
+					48C84D6125456C9E00328ADF = {
+						CreatedOnToolsVersion = 11.6;
+					};
+				};
+			};
+			buildConfigurationList = 48C84D5D25456C9E00328ADF /* Build configuration list for PBXProject "ElectronicCarMap" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 48C84D5925456C9E00328ADF;
+			productRefGroup = 48C84D6325456C9E00328ADF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				48C84D6125456C9E00328ADF /* ElectronicCarMap */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		48C84D6025456C9E00328ADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48C84D7225456C9E00328ADF /* LaunchScreen.storyboard in Resources */,
+				4802AF3D254EBED40059223E /* GoogleService-Info.plist in Resources */,
+				48C84D6F25456C9E00328ADF /* Assets.xcassets in Resources */,
+				48C84D6D25456C9E00328ADF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8B088E6EFEFAC4E22D34CFCA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ElectronicCarMap-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB2F472A6AAEDD3CEABFC6DD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ElectronicCarMap/Pods-ElectronicCarMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ElectronicCarMap/Pods-ElectronicCarMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ElectronicCarMap/Pods-ElectronicCarMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		48C84D5E25456C9E00328ADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				48C84D7D25456F3D00328ADF /* LoginViewController.swift in Sources */,
+				4855603D254C29C900668ACF /* MakingReservationViewController.swift in Sources */,
+				48C84D7A25456F1600328ADF /* MainMapViewController.swift in Sources */,
+				48C84D862546F06200328ADF /* ChargerSearchViewController.swift in Sources */,
+				4872399F254B9C7A00CF8294 /* PathFinderViewController.swift in Sources */,
+				48C84D82254571B500328ADF /* ChargerStationModel.swift in Sources */,
+				48C84D84254573B700328ADF /* MyInfoViewController.swift in Sources */,
+				48C84D6625456C9E00328ADF /* AppDelegate.swift in Sources */,
+				48C84D7F25456F4600328ADF /* SignInViewController.swift in Sources */,
+				48E54419254996F200A0E888 /* ChargerInformationViewController.swift in Sources */,
+				48BA03FF254FE382002C8FDE /* UserModel.swift in Sources */,
+				487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */,
+				48F43F50254811560090F5B8 /* favoriteChargersViewController.swift in Sources */,
+				48C84D6825456C9E00328ADF /* SceneDelegate.swift in Sources */,
+				48F43F4E2548112B0090F5B8 /* reservationViewController.swift in Sources */,
+				48E5442025499BC100A0E888 /* searchPlaceDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		48C84D6B25456C9E00328ADF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48C84D6C25456C9E00328ADF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		48C84D7025456C9E00328ADF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				48C84D7125456C9E00328ADF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		48C84D7425456C9E00328ADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		48C84D7525456C9E00328ADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		48C84D7725456C9E00328ADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DFDCAD734931D09D887EDE6 /* Pods-ElectronicCarMap.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NNVHULJDG5;
+				INFOPLIST_FILE = ElectronicCarMap/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hcmlr21.ElectronicCarMap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		48C84D7825456C9E00328ADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86A95F1827D8FAC55A3F5659 /* Pods-ElectronicCarMap.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NNVHULJDG5;
+				INFOPLIST_FILE = ElectronicCarMap/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = hcmlr21.ElectronicCarMap;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		48C84D5D25456C9E00328ADF /* Build configuration list for PBXProject "ElectronicCarMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48C84D7425456C9E00328ADF /* Debug */,
+				48C84D7525456C9E00328ADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		48C84D7625456C9E00328ADF /* Build configuration list for PBXNativeTarget "ElectronicCarMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48C84D7725456C9E00328ADF /* Debug */,
+				48C84D7825456C9E00328ADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 48C84D5A25456C9E00328ADF /* Project object */;
+}

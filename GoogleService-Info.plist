@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>738965761154-fn2bjj49q113qat9im35f1ntpccl3k0a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.738965761154-fn2bjj49q113qat9im35f1ntpccl3k0a</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCiEziek9x6cC67I5xZg7Q538oGr-jLSj4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>738965761154</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>hcmlr21.ElectronicCarMap</string>
+	<key>PROJECT_ID</key>
+	<string>electroniccarmap</string>
+	<key>STORAGE_BUCKET</key>
+	<string>electroniccarmap.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:738965761154:ios:a08fcc60c2db5636c4589b</string>
+	<key>DATABASE_URL</key>
+	<string>https://electroniccarmap.firebaseio.com</string>
+</dict>
+</plist>
