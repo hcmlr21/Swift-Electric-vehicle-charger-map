@@ -9,7 +9,7 @@
 import UIKit
 import NMapsMap
 
-class PathFinderViewController: UIViewController, searchPlaceDelegate {
+class PathFinderViewController: UIViewController, chargerStationDelegate {
     // MARK: - ProPerties
     
     // MARK: - Methods

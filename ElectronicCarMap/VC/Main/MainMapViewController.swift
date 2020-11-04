@@ -11,7 +11,9 @@ import Alamofire
 import NMapsMap
 import Firebase
 
-class MainMapViewController: UIViewController, CLLocationManagerDelegate, searchPlaceDelegate {
+let bookMarkNotificationName = "bookMarkNotification"
+
+class MainMapViewController: UIViewController, CLLocationManagerDelegate, chargerStationDelegate {
     // MARK: - ProPerties
     var chargerStation: ChargerStationModel?
     var marker: NMFMarker = NMFMarker()
@@ -25,6 +27,19 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
     let myUid = Auth.auth().currentUser?.uid
     
     // MARK: - Methods
+    @objc func onClickedBookMarkChargerStation(notification: NSNotification) {
+        print("noti get")
+        if let chargerStationIdDic = notification.object as? NSDictionary {
+            if let chargerStationId = chargerStationIdDic["chargerStationId"] as? String {
+                self.onClikedChargerStation(chargerStationId: chargerStationId)
+            }
+        }
+    }
+    
+    func setBookMarkNotiObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onClickedBookMarkChargerStation), name: Notification.Name(bookMarkNotificationName), object: nil)
+    }
+    
     func makeMap() {
 //        let infoWindow = NMFInfoWindow()
 //        let dataSource = NMFInfoWindowDefaultTextSource.data()
@@ -106,7 +121,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
 //        @IBOutlet weak var infoCloseButton: UIButton!
         
         
-        self.databaseRef.child("users").child(self.myUid!).child("favorite").observe(.value) { (dataSnapShot) in
+        self.databaseRef.child("users").child(self.myUid!).child("bookMark").observe(.value) { (dataSnapShot) in
             var check = false
             for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
                 let statId = item.key
@@ -117,9 +132,9 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
             }
             
             if check {
-                self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+                self.statBookMarkButton.imageView?.image = UIImage(named: "star")
             } else {
-                self.statFavoriteButton.imageView?.image = UIImage(named: "emptyStar")
+                self.statBookMarkButton.imageView?.image = UIImage(named: "emptyStar")
             }
         }
         
@@ -150,8 +165,8 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         }
     }
     
-    func requestChargerStaionDetail(chargerStation: ChargerStationModel) {
-        let url = self.baseUrl + "/" + chargerStation.statId
+    func requestChargerStaionDetail(chargerStationId: String) {
+        let url = self.baseUrl + "/" + chargerStationId
         AF.request(url, method: .get).responseJSON { (response) in
             switch response.result {
             case .success(let obj):
@@ -175,7 +190,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
     @IBOutlet weak var statButton: UIButton!
     @IBOutlet weak var destinationButton: UIButton!
     @IBOutlet weak var infoCloseButton: UIButton!
-    @IBOutlet weak var statFavoriteButton: UIButton!
+    @IBOutlet weak var statBookMarkButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func touchUpSearchBarButton(_ sender: UIButton) {
@@ -201,8 +216,8 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         }
     }
     
-    @IBAction func touchUpFavoriteButton(_ sender: UIButton) {
-        self.databaseRef.child("users").child(self.myUid!).child("favorite").observeSingleEvent(of: .value, with: { (dataSnapShot) in
+    @IBAction func touchUpBookMarkButton(_ sender: UIButton) {
+        self.databaseRef.child("users").child(self.myUid!).child("bookMark").observeSingleEvent(of: .value, with: { (dataSnapShot) in
             var check: Bool = false
             for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
                 let statId = item.key
@@ -213,21 +228,20 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
             }
             
             if check {
-                self.databaseRef.child("users").child(self.myUid!).child("favorite").child(self.chargerStation!.statId).removeValue()
-                self.statFavoriteButton.imageView?.image = UIImage(named: "emptyStar")
+                self.databaseRef.child("users").child(self.myUid!).child("bookMark").child(self.chargerStation!.statId).removeValue()
+                self.statBookMarkButton.imageView?.image = UIImage(named: "emptyStar")
             } else {
                 let value = [self.chargerStation?.statId:self.chargerStation?.statName]
-                self.databaseRef.child("users").child(self.myUid!).child("favorite").updateChildValues(value)
-                self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+                self.databaseRef.child("users").child(self.myUid!).child("bookMark").updateChildValues(value)
+                self.statBookMarkButton.imageView?.image = UIImage(named: "star")
             }
         })
     }
     
-    
-    
     // MARK: - Delegates And DataSource
-    func onClikedChargerStation(chargerStation: ChargerStationModel) {
-        self.requestChargerStaionDetail(chargerStation: chargerStation)
+    func onClikedChargerStation(chargerStationId: String) {
+        print("선택된 충전소", chargerStationId)
+        self.requestChargerStaionDetail(chargerStationId: chargerStationId)
 //        self.setLocationOverlay(lat: Double(chargerStation.lat)!, lng: Double(chargerStation.lng)!)
         
 //        self.setLocationOverlay(lat: 35.512571, lng: 129.422104)
@@ -241,11 +255,11 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         self.chargerInfoView.isHidden = true
 //        self.naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.databaseRef.child("users").child(self.myUid!).child("favorite").observe(.value) { (dataSnapShot) in
+        self.databaseRef.child("users").child(self.myUid!).child("bookMark").observe(.value) { (dataSnapShot) in
             for item in dataSnapShot.children.allObjects as! [DataSnapshot] {
                 let statId = item.key
                 if statId == self.chargerStation?.statId {
-                    self.statFavoriteButton.imageView?.image = UIImage(named: "star")
+                    self.statBookMarkButton.imageView?.image = UIImage(named: "star")
                     break
                 }
             }
@@ -259,5 +273,6 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, search
         self.view.addGestureRecognizer(tapView)
         
         self.makeMap()
+        self.setBookMarkNotiObserver()
     }
 }

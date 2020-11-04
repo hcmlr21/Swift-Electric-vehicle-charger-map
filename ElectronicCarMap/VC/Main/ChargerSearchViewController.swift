@@ -10,15 +10,9 @@ import UIKit
 import Alamofire
 import SWXMLHash
 
-//struct APIrespons : Codable{
-//    var success : Bool
-//    var chargerStations: [ChargerStation]
-//}
-
-
 class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     // MARK: - ProPerties
-    var chargerDelegate: searchPlaceDelegate?
+    var chargerDelegate: chargerStationDelegate?
     let chargerKey = "?serviceKey=VSiTPgmdSow8suOp6MW6%2BIoHCZ9DU6kDloiZ3oDh6mCe%2Fr7FjD7A9Usupx6q0cOq1akSrizFlCkKhYchpNBm1w%3D%3D&" //전기차데이터 key
     let chargerBaseUrl2 = "http://open.ev.or.kr:8080/openapi/services/EvCharger/getChargerInfo"//전기차데이터1 url endpoint
     let chargerBaseUrl3 = "http://openapi.kepco.co.kr/service/EvInfoServiceV2/getEvSearchList"
@@ -112,9 +106,8 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.chargerDelegate?.onClikedChargerStation(chargerStation: self.searchedChargerStations[indexPath.row])
+        self.chargerDelegate?.onClikedChargerStation(chargerStationId: self.searchedChargerStations[indexPath.row].statId)
         self.dismiss(animated: false, completion: nil)
-        
     }
     
     // MARK: - Life Cycles

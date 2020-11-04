@@ -30,7 +30,6 @@ class SignInViewController: UIViewController {
                         "userName": name,
                         "userEmail": email,
                         "uid": myUid!,
-//                        "favorite":"11"
                     ]
 
                     self.databaseRef.child("users").child(myUid!).setValue(value) { (error, ref) in
