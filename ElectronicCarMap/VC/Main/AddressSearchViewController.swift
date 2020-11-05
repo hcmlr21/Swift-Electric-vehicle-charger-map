@@ -11,51 +11,82 @@ import Alamofire
 
 class AddressSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     // MARK: - ProPerties
+    var chargerDelegate: chargerStationDelegate?
+    let roadAddrKey = "devU01TX0FVVEgyMDIwMTEwNDIxMjkyNzExMDM3MTQ="
+    let keyId = "iaf1r9n5ki"
+    let keyPass = "Sef6plir6Dz1baxmF2lbyTqtsorc2gQpup9FT3kc"
     let cellIdentifier = "addressCell"
-    let addresses: [String] = []
     let addressSearchCilentId = "gUJ5HvMoYGrUx1pznTyd"
     let addressSearchClientSecret = "O7fz4Y_E8p"
     let baseUrl = "https://openapi.naver.com/v1/search/local.json"
+    var searchedAddrs: [Juso] = []
+    var coord: [String: String]?
+    var spotInfo: [String:String] = [:]
     
     // MARK: - Methods
-    func naverSearchPlace(searchName: String) {
-        let header: HTTPHeaders = ["X-Naver-Client-Id": self.addressSearchCilentId, "X-Naver-Client-Secret": self.addressSearchClientSecret]
-        
-        let coordinate: String = "35.512571" + "," + "129.422104" // 현재 지도 중심의 좌표 // 한글도 검색될 수 있도록 URL Encoding
-        let encodedSearchName = searchName.addingPercentEncoding( withAllowedCharacters: NSCharacterSet.urlQueryAllowed)
-        AF.request("https://naveropenapi.apigw.ntruss.com/map-place/v1/search?query=" + encodedSearchName! + "&coordinate=" + coordinate, method: .get, encoding: URLEncoding.default, headers: header).validate(statusCode: 200..<300).responseJSON { (response) -> Void in
+    func setSearchedAddresses(JSONObj: Any) {
+        do {
+            guard let jsonFormatedResponse = JSONObj as? NSDictionary, let results = jsonFormatedResponse["results"] as? NSDictionary, let addrs = results["juso"] else {
+                return }
+            let dataJSON = try JSONSerialization.data(withJSONObject: addrs, options: .prettyPrinted)
+            let addrsResult = try JSONDecoder().decode([Juso].self, from: dataJSON)
+            self.searchedAddrs = addrsResult
             
-//            if response.result {
-//                var swiftyJsonVar = JSON(response.result.value!)
-//                print(swiftyJsonVar)
-//                let searchResultCount = swiftyJsonVar["meta"]["count"].int! // 최대 5개까지 검색함.
-//                let searchResult = swiftyJsonVar["places"]
-//                for i in 0 ... searchResultCount-1 {
-//                    self.searchedPlaces.append(searchResult[i]["name"].string!)
-//                    self.searchedLatitude.append(Double(searchResult[i]["y"].string!)!)
-//                    self.searchedLongitude.append(Double(searchResult[i]["x"].string!)!)
-//                }
-//
-//            } else {
-//
-//            }
+            self.addressTableView.reloadData()
+        } catch(let e) {
+            print(e.localizedDescription)
         }
     }
     
+    func requestAddress(addrKeyword: String) {
+        if addrKeyword.count < 2 {
+            self.searchedAddrs = []
+            self.addressTableView.reloadData()
+        } else {
+            let baseUrl = "http://www.juso.go.kr/addrlink/addrLinkApi.do"
+            let param: [String : Any] = [
+                "confmKey": self.roadAddrKey,
+                "currentPage": "1",
+                "countPerPage": "10",
+                "keyword": addrKeyword,
+                "resultType": "json"
+            ]
+            
+            AF.request(baseUrl, method: .get, parameters: param).responseJSON { (response) in
+                switch response.result {
+                case .success(let JSONObj):
+                    self.setSearchedAddresses(JSONObj: JSONObj)
+                case .failure(let e):
+                    print("AF", e.localizedDescription)
+                }
+            }
+        }
+    }
     
-    
-    func requestAddress() {
-        let url = self.baseUrl
-        let header: HTTPHeaders = ["X-Naver-Client-Id": self.addressSearchCilentId, "X-Naver-Client-Secret": self.addressSearchClientSecret]
-        
-        let pram = ["query": "구의"]
-//        AF.request(<#T##convertible: URLConvertible##URLConvertible#>, method: <#T##HTTPMethod#>, parameters: <#T##Parameters?#>, encoding: <#T##ParameterEncoding#>, headers: <#T##HTTPHeaders?#>, interceptor: <#T##RequestInterceptor?#>, requestModifier: <#T##Session.RequestModifier?##Session.RequestModifier?##(inout URLRequest) throws -> Void#>)
-        
+    func requestOverlay(addr: String) {
+        let url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+        let header:HTTPHeaders = [
+            "X-NCP-APIGW-API-KEY-ID":self.keyId,
+            "X-NCP-APIGW-API-KEY":self.keyPass
+        ]
+        let pram = ["query": addr]
         
         AF.request(url, method: .get, parameters: pram, headers: header).responseJSON { (response) in
             switch response.result {
             case .success(let JSONobj):
-            debugPrint(response)
+                do {
+                    let JSONData = try JSONSerialization.data(withJSONObject: JSONobj, options: .prettyPrinted)
+                    let CoordResponseResult = try JSONDecoder().decode(CoordResponse.self, from: JSONData)
+                    let lat = CoordResponseResult.addresses[0].y!
+                    let lng = CoordResponseResult.addresses[0].x!
+                    self.spotInfo["lat"] = lat
+                    self.spotInfo["lng"] = lng
+                    self.chargerDelegate?.onClickedAddress(spotInfo: self.spotInfo)
+                    
+                    self.dismiss(animated: false, completion: nil)
+                } catch(let e) {
+                    print(e.localizedDescription)
+                }
             case .failure(let e):
                 print(e.localizedDescription)
             }
@@ -74,12 +105,13 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.addresses.count
+        return self.searchedAddrs.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.addressTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
-        let address = self.addresses[indexPath.row]
+        let address = self.searchedAddrs[indexPath.row]
+        cell.textLabel?.text = address.bdNm
         
         return cell
     }
@@ -88,12 +120,21 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.endEditing(true)
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.requestAddress(addrKeyword: searchText)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let addr = self.searchedAddrs[indexPath.row]
+        self.spotInfo["name"] = addr.bdNm
+        self.requestOverlay(addr: self.searchedAddrs[indexPath.row].roadAddrPart1!)
+    }
+    
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addressSearchBar.delegate = self
         self.addressSearchBar.becomeFirstResponder()
-        
-        self.requestAddress()
     }
 }

@@ -27,15 +27,6 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     let myUid = Auth.auth().currentUser?.uid
     
     // MARK: - Methods
-    @objc func onClickedBookMarkChargerStation(notification: NSNotification) {
-        print("noti get")
-        if let chargerStationIdDic = notification.object as? NSDictionary {
-            if let chargerStationId = chargerStationIdDic["chargerStationId"] as? String {
-                self.onClikedChargerStation(chargerStationId: chargerStationId)
-            }
-        }
-    }
-    
     func setBookMarkNotiObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.onClickedBookMarkChargerStation), name: Notification.Name(bookMarkNotificationName), object: nil)
     }
@@ -187,7 +178,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     @IBOutlet weak var statStatusLabel: UILabel!
     @IBOutlet weak var statUseTimeLabel: UILabel!
     @IBOutlet weak var reservationButton: UIButton!
-    @IBOutlet weak var statButton: UIButton!
+    @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var destinationButton: UIButton!
     @IBOutlet weak var infoCloseButton: UIButton!
     @IBOutlet weak var statBookMarkButton: UIButton!
@@ -205,6 +196,27 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     @IBAction func touchUpCloseInfoView(_ sender: UIButton) {
         self.hideChargerInfoView()
     }
+    
+    @IBAction func touchUpDirectionButton(_ sender: UIButton) {
+        let pathFinderVC = self.storyboard?.instantiateViewController(identifier: "pathFinderViewController") as! PathFinderViewController
+        pathFinderVC.modalPresentationStyle = .fullScreen
+        
+        let chargerStationInfo = [
+            "name": self.chargerStation!.statName,
+            "lat": self.chargerStation!.lat!,
+            "lng": self.chargerStation!.lng!
+        ]
+        
+        if sender == self.startButton {
+            pathFinderVC.startInfo = chargerStationInfo
+        } else {
+            pathFinderVC.destinationInfo = chargerStationInfo
+        }
+        
+        present(pathFinderVC, animated: true, completion: nil)
+        
+    }
+    
     
     @IBAction func touchUpReservationButton(_ sender: UIButton) {
         let makingRservationVC = self.storyboard?.instantiateViewController(identifier: "makingReservationViewController") as! MakingReservationViewController
@@ -238,9 +250,16 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         })
     }
     
+    @objc func onClickedBookMarkChargerStation(notification: NSNotification) {
+        if let chargerStationIdDic = notification.object as? NSDictionary {
+            if let chargerStationId = chargerStationIdDic["chargerStationId"] as? String {
+                self.onClickedChargerStation(chargerStationId: chargerStationId)
+            }
+        }
+    }
+    
     // MARK: - Delegates And DataSource
-    func onClikedChargerStation(chargerStationId: String) {
-        print("선택된 충전소", chargerStationId)
+    func onClickedChargerStation(chargerStationId: String) {
         self.requestChargerStaionDetail(chargerStationId: chargerStationId)
 //        self.setLocationOverlay(lat: Double(chargerStation.lat)!, lng: Double(chargerStation.lng)!)
         

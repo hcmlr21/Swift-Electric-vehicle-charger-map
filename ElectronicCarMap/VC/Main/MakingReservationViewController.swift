@@ -52,7 +52,7 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
     
     // MARK: - Delegates And DataSource
     func pickChargerId(charger: ChargerModel) {
-        self.chargerIdButton.setTitle(String(charger.chargerId!), for: .normal)
+        self.chargerIdButton.setTitle(charger.chargerId!, for: .normal)
         setChargerInfo(selecteCharger: charger)
     }
     

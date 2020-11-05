@@ -32,7 +32,7 @@ class ChargerIdPickerViewController: UIViewController, UIPickerViewDelegate, UIP
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return String(self.chargers[row].chargerId!)
+        return self.chargers[row].chargerId!
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

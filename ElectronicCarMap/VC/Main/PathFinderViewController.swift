@@ -11,6 +11,9 @@ import NMapsMap
 
 class PathFinderViewController: UIViewController, chargerStationDelegate {
     // MARK: - ProPerties
+    var clickedButton: UIButton?
+    var startInfo: [String:String]?
+    var destinationInfo: [String:String]?
     
     // MARK: - Methods
     func makeMap() {
@@ -65,21 +68,63 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
         //마커의 위치
         marker.position = NMGLatLng(lat: lat, lng: lng)
         marker.mapView = mapView
+        
         mapView.latitude = lat
         mapView.longitude = lng
     }
     
+    func onClickedAddress(spotInfo:[String:String]) {
+        if self.clickedButton == self.startButton {
+            self.startInfo = spotInfo
+        } else {
+            self.destinationInfo = spotInfo
+        }
+        
+        self.clickedButton?.setTitle("  " + spotInfo["name"]!, for: .normal)
+        self.setLocationOverlay(lat: Double(spotInfo["lat"]!)!, lng: Double(spotInfo["lng"]!)!)
+    }
+    
+    func presentAddressSearchView() {
+        let addressVC = self.storyboard?.instantiateViewController(identifier: "addressSearchViewController") as! AddressSearchViewController
+        addressVC.modalPresentationStyle = .fullScreen
+        addressVC.chargerDelegate = self
+        
+        present(addressVC, animated: false, completion: nil)
+    }
+    
     // MARK: - IBOutlets
     @IBOutlet weak var naverMapView: NMFNaverMapView!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var destinationButton: UIButton!
     
     // MARK: - IBActions
+    @IBAction func touchUpFindButton(_ sender: UIButton) {
+        self.clickedButton = sender
+        self.presentAddressSearchView()
+    }
+    
+    @IBAction func touchUpCloseButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - Delegates And DataSource
     
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.makeMap()
+        
+        if let startInfo = self.startInfo {
+            self.startButton.setTitle("  " + startInfo["name"]!, for: .normal)
+            self.setLocationOverlay(lat: Double(startInfo["lat"]!)!, lng: Double(startInfo["lng"]!)!)
+        } else if let destinationInfo = self.destinationInfo {
+            self.destinationButton.setTitle("  " + destinationInfo["name"]!, for: .normal)
+            self.setLocationOverlay(lat: Double(destinationInfo["lat"]!)!, lng: Double(destinationInfo["lng"]!)!)
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 }

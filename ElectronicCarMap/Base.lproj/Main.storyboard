@@ -706,6 +706,9 @@
                                                                         <real key="value" value="2"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="touchUpDirectionButton:" destination="mbL-PI-b0a" eventType="touchUpInside" id="FfY-8M-wu1"/>
+                                                                </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uoi-77-11i">
                                                                 <rect key="frame" x="104" y="0.0" width="96" height="36"/>
@@ -724,6 +727,9 @@
                                                                         <color key="value" red="0.2717006119" green="0.17581564760000001" blue="0.47902125629999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="touchUpDirectionButton:" destination="mbL-PI-b0a" eventType="touchUpInside" id="vKg-lw-TAq"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                     </stackView>
@@ -778,9 +784,9 @@
                         <outlet property="naverMapView" destination="iUH-I6-Gd3" id="dfX-9X-ROe"/>
                         <outlet property="reservationButton" destination="J1o-qT-ZZk" id="PiD-gV-F8o"/>
                         <outlet property="searchBarButton" destination="geY-PV-zgE" id="X6H-qa-0Iq"/>
+                        <outlet property="startButton" destination="jps-nY-09r" id="b9p-iN-GhO"/>
                         <outlet property="statAddressLabel" destination="RvH-pw-GGl" id="XBI-6j-Tao"/>
                         <outlet property="statBookMarkButton" destination="Zuw-nY-PIE" id="uib-8J-uGw"/>
-                        <outlet property="statButton" destination="jps-nY-09r" id="b9p-iN-GhO"/>
                         <outlet property="statNameLabel" destination="ZmV-LM-h2v" id="rO1-rL-d8F"/>
                         <outlet property="statStatusLabel" destination="8bu-Br-jbP" id="eLA-v3-nTW"/>
                         <outlet property="statUseTimeLabel" destination="dzp-d3-SpJ" id="nOV-mB-cTN"/>
@@ -1071,8 +1077,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1D-Pw-Uav">
-                                <rect key="frame" x="236" y="421" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1D-Pw-Uav">
+                                <rect key="frame" x="236" y="421" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1085,8 +1091,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KmJ-k7-pxp">
-                                <rect key="frame" x="236" y="479" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KmJ-k7-pxp">
+                                <rect key="frame" x="236" y="479" width="0.0" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -1250,7 +1256,7 @@
         <!--Path Finder View Controller-->
         <scene sceneID="GZe-oR-rCm">
             <objects>
-                <viewController id="Ez0-25-7XI" customClass="PathFinderViewController" customModule="ElectronicCarMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pathFinderViewController" id="Ez0-25-7XI" customClass="PathFinderViewController" customModule="ElectronicCarMap" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="58X-C7-BNG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1300,7 +1306,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="touchUpSearchBarButton:" destination="mbL-PI-b0a" eventType="touchUpInside" id="4MW-3J-AW9"/>
+                                                            <action selector="touchUpFindButton:" destination="Ez0-25-7XI" eventType="touchUpInside" id="Dnr-ZO-dTi"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksq-aY-sC4" userLabel="장소검색">
@@ -1325,7 +1331,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="touchUpSearchBarButton:" destination="mbL-PI-b0a" eventType="touchUpInside" id="Xy0-0z-BQK"/>
+                                                            <action selector="touchUpFindButton:" destination="Ez0-25-7XI" eventType="touchUpInside" id="ZYG-KS-p3t"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1338,13 +1344,26 @@
                                             <constraint firstAttribute="bottom" secondItem="JBs-s1-f5S" secondAttribute="bottom" id="h16-pj-gXt"/>
                                         </constraints>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Xt-Y4-Tjv">
+                                        <rect key="frame" x="367" y="35" width="27" height="27.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" systemColor="systemGray3Color"/>
+                                        <state key="normal" image="multiply" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchUpCloseButton:" destination="Ez0-25-7XI" eventType="touchUpInside" id="OwR-M1-WDa"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="5Xt-Y4-Tjv" firstAttribute="top" secondItem="f77-Ws-tLd" secondAttribute="top" constant="35" id="ExA-dG-BUV"/>
                                     <constraint firstAttribute="trailing" secondItem="09c-cr-Efd" secondAttribute="trailing" constant="40" id="IjW-9n-Tsk"/>
                                     <constraint firstItem="09c-cr-Efd" firstAttribute="leading" secondItem="f77-Ws-tLd" secondAttribute="leading" constant="10" id="SYf-dW-lxe"/>
                                     <constraint firstAttribute="bottom" secondItem="09c-cr-Efd" secondAttribute="bottom" constant="10" id="Tgd-v5-dfe"/>
                                     <constraint firstAttribute="height" constant="170" id="faf-Iv-7Gs"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Xt-Y4-Tjv" secondAttribute="trailing" constant="20" id="hEZ-Ht-qj2"/>
                                 </constraints>
                             </view>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="87j-58-V3F">
@@ -1381,7 +1400,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="destinationButton" destination="ksq-aY-sC4" id="8lf-Qu-k8e"/>
                         <outlet property="naverMapView" destination="EVa-8l-zi7" id="TD9-iD-0n9"/>
+                        <outlet property="startButton" destination="Izv-hJ-lOc" id="owt-jc-6RX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Two-7o-hxb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1483,11 +1504,15 @@
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="emptyStart" width="225" height="225"/>
         <image name="logo" width="418" height="426"/>
+        <image name="multiply" catalog="system" width="128" height="111"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

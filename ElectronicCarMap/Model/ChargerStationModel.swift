@@ -60,10 +60,11 @@ struct ChargerStationModel: Codable {
     var busiName: String?
     var busiCall: String?
     var chargers: [ChargerModel]?
+    var availableChargerCount: Int?
 }
 
 struct ChargerModel: Codable {
-    var chargerId: Int?
+    var chargerId: String?
     var chargerType: String?
     var status: String?
     var statusUpdate: String?

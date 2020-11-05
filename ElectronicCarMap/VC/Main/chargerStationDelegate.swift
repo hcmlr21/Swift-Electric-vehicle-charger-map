@@ -9,13 +9,18 @@
 import UIKit
 
 protocol chargerStationDelegate {
-    func onClikedChargerStation(chargerStationId: String)
+    func onClickedChargerStation(chargerStationId: String)
+    func onClickedAddress(spotInfo:[String:String])
     func pickChargerId(charger: ChargerModel)
 }
 
 extension chargerStationDelegate {
     //optional
-    func onClikedChargerStation(chargerStationId: String) {
+    func onClickedChargerStation(chargerStationId: String) {
+        
+    }
+    
+    func onClickedAddress(spotInfo: [String:String]) {
         
     }
     

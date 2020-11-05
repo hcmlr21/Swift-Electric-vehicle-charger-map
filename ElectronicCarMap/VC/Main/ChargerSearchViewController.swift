@@ -31,14 +31,7 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
             
             let dataJSON = try JSONSerialization.data(withJSONObject: chargerstations, options: .prettyPrinted)
             let chargerStationsResult = try JSONDecoder().decode([ChargerStationModel].self, from: dataJSON)
-            let chargerStionsCount = chargerStationsResult.count
-            
-            self.searchedChargerStations.removeAll()
-            for i in 0..<chargerStionsCount {
-                let chargerStation = chargerStationsResult[i]
-                self.searchedChargerStations.append(chargerStation)
-            }
-            
+            self.searchedChargerStations = chargerStationsResult
             self.chargerTableView.reloadData()
         } catch{
             print(error.localizedDescription)
@@ -56,7 +49,7 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
         }
     }
     
-    func getCharger2(name: String, addr: String) {
+    func getCharger(name: String, addr: String) {
         let url = self.chargerBalseUrl
         
         if (name == "") && (addr == "") {
@@ -100,13 +93,13 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        self.getCharger2(name: searchText, addr: searchText)
+        self.getCharger(name: searchText, addr: searchText)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.chargerDelegate?.onClikedChargerStation(chargerStationId: self.searchedChargerStations[indexPath.row].statId)
+        self.chargerDelegate?.onClickedChargerStation(chargerStationId: self.searchedChargerStations[indexPath.row].statId)
+        print("AVail", self.searchedChargerStations[indexPath.row].availableChargerCount)
         self.dismiss(animated: false, completion: nil)
     }
     

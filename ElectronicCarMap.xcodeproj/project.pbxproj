@@ -10,6 +10,7 @@
 		4802AF3D254EBED40059223E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4802AF3C254EBED40059223E /* GoogleService-Info.plist */; };
 		4855603D254C29C900668ACF /* MakingReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4855603C254C29C900668ACF /* MakingReservationViewController.swift */; };
 		4867CD4A25519F1E00BB581D /* ChargerIdPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */; };
+		4870A3E12552D93C0033215F /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870A3E02552D93C0033215F /* AddressModel.swift */; };
 		4872399F254B9C7A00CF8294 /* PathFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */; };
 		487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487ED646254BA69E0004999D /* AddressSearchViewController.swift */; };
 		48BA03FF254FE382002C8FDE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BA03FE254FE382002C8FDE /* UserModel.swift */; };
@@ -41,6 +42,7 @@
 		4832DB102549C42300BCCAB9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4855603C254C29C900668ACF /* MakingReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingReservationViewController.swift; sourceTree = "<group>"; };
 		4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerIdPickerViewController.swift; sourceTree = "<group>"; };
+		4870A3E02552D93C0033215F /* AddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
 		4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFinderViewController.swift; sourceTree = "<group>"; };
 		487ED646254BA69E0004999D /* AddressSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchViewController.swift; sourceTree = "<group>"; };
 		48BA03FE254FE382002C8FDE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				48C84D81254571B500328ADF /* ChargerStationModel.swift */,
 				48BA03FE254FE382002C8FDE /* UserModel.swift */,
+				4870A3E02552D93C0033215F /* AddressModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -144,10 +147,10 @@
 		48E5441A2549976700A0E888 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				48E5441F25499BC100A0E888 /* chargerStationDelegate.swift */,
 				48C84D7925456F1600328ADF /* MainMapViewController.swift */,
 				48C84D852546F06200328ADF /* ChargerSearchViewController.swift */,
 				48E54418254996F200A0E888 /* ChargerInformationViewController.swift */,
-				48E5441F25499BC100A0E888 /* chargerStationDelegate.swift */,
 				4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */,
 				487ED646254BA69E0004999D /* AddressSearchViewController.swift */,
 				4855603C254C29C900668ACF /* MakingReservationViewController.swift */,
@@ -328,6 +331,7 @@
 				48C84D84254573B700328ADF /* MyInfoViewController.swift in Sources */,
 				48C84D6625456C9E00328ADF /* AppDelegate.swift in Sources */,
 				48C84D7F25456F4600328ADF /* SignInViewController.swift in Sources */,
+				4870A3E12552D93C0033215F /* AddressModel.swift in Sources */,
 				48E54419254996F200A0E888 /* ChargerInformationViewController.swift in Sources */,
 				48BA03FF254FE382002C8FDE /* UserModel.swift in Sources */,
 				487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */,
