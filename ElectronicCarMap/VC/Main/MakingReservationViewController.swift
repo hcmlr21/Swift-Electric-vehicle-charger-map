@@ -11,6 +11,7 @@ import UIKit
 
 class MakingReservationViewController: UIViewController, UITextFieldDelegate, chargerStationDelegate {
     // MARK: - ProPerties
+    var chargerDelegate: chargerStationDelegate?
     var chargerStation: ChargerStationModel!
     var chargers: [ChargerModel] = []
     
@@ -107,7 +108,8 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
     }
     
     @IBAction func touchUpReservationButton(_ sender: UIButton) {
-        
+        self.dismiss(animated: false, completion: nil)
+        self.chargerDelegate?.onClickedReservationButton()
     }
     
     // MARK: - Delegates And DataSource

@@ -9,7 +9,8 @@
 import UIKit
 import NMapsMap
 
-class reservationViewController: UIViewController {
+
+class ReservationViewController: UIViewController {
     // MARK: - ProPerties
     var charger: ChargerStationModel?
     
@@ -44,6 +45,12 @@ class reservationViewController: UIViewController {
     @IBOutlet weak var cancelReservationButton: UIButton!
     
     // MARK: - IBActions
+    @IBAction func touch(_ sender: UIButton) {
+        let reservationCompleteVC = self.storyboard?.instantiateViewController(identifier: "reservationCompleteViewController") as! ReservationCompleteViewController
+        reservationCompleteVC.modalPresentationStyle = .fullScreen
+        
+        present(reservationCompleteVC, animated: true, completion: nil)
+    }
     
     // MARK: - Delegates And DataSource
     

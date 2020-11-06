@@ -12,6 +12,7 @@ import NMapsMap
 import Firebase
 
 let bookMarkNotificationName = "bookMarkNotification"
+let reservationCompleteNotificationName = "reservationCompleteNotification"
 
 class MainMapViewController: UIViewController, CLLocationManagerDelegate, chargerStationDelegate {
     // MARK: - ProPerties
@@ -29,6 +30,10 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     // MARK: - Methods
     func setBookMarkNotiObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.onClickedBookMarkChargerStation), name: Notification.Name(bookMarkNotificationName), object: nil)
+    }
+    
+    func setReservationCompleteNotiObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onClickedReservationCompleteButton), name: NSNotification.Name(reservationCompleteNotificationName), object: nil)
     }
     
     func makeMap() {
@@ -242,6 +247,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         let makingRservationVC = self.storyboard?.instantiateViewController(identifier: "makingReservationViewController") as! MakingReservationViewController
         
         makingRservationVC.modalPresentationStyle = .fullScreen
+        makingRservationVC.chargerDelegate = self
         if let chargerStation = self.chargerStation {
             makingRservationVC.chargerStation = chargerStation
             present(makingRservationVC, animated: true, completion: nil)
@@ -278,6 +284,10 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         }
     }
     
+    @objc func onClickedReservationCompleteButton(notification: NSNotification) {
+        self.tabBarController?.selectedIndex = 2
+    }
+    
     // MARK: - Delegates And DataSource
     func onClickedChargerStation(chargerStationId: String) {
         self.requestChargerStaionDetail(chargerStationId: chargerStationId)
@@ -286,7 +296,14 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
 //        self.setLocationOverlay(lat: 35.512571, lng: 129.422104)
         
     }
-
+    
+    func onClickedReservationButton() {
+        let reservationCompleteVC = self.storyboard?.instantiateViewController(identifier: "reservationCompleteViewController") as! ReservationCompleteViewController
+        reservationCompleteVC.modalPresentationStyle = .fullScreen
+        
+        self.present(reservationCompleteVC, animated: true, completion: nil)
+    }
+    
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -313,5 +330,6 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         
         self.makeMap()
         self.setBookMarkNotiObserver()
+        self.setReservationCompleteNotiObserver()
     }
 }

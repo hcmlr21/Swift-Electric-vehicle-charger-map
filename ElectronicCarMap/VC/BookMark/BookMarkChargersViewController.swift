@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class bookMarkChargersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BookMarkChargersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // MARK: - ProPerties
     var chargerDelegate: chargerStationDelegate?
     let cellIdentifier = "bookMarkCell"
@@ -66,7 +66,6 @@ class bookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //        self.chargerDelegate?.onClikedChargerStation(chargerStationId: self.bookMarkChargerStationsId[indexPath.row])
         let chargerStationDic: [String:String] = ["chargerStationId":self.bookMarkChargerStationsId[indexPath.row]]
         NotificationCenter.default.post(name: Notification.Name(bookMarkNotificationName), object: chargerStationDic)
         
