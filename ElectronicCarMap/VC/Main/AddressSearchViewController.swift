@@ -98,6 +98,9 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var addressSearchBar: UISearchBar!
     
     // MARK: - IBActions
+    @IBAction func touchUpBackButton(_ sender: UIButton) {
+        self.dismiss(animated: false, completion: nil)
+    }
     
     // MARK: - Delegates And DataSource
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Jkookoo. All rights reserved.
 //
 
+
 import UIKit
 
 class MakingReservationViewController: UIViewController, UITextFieldDelegate, chargerStationDelegate {
@@ -15,8 +16,51 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
     
     // MARK: - Methods
     func setChargerInfo(selecteCharger: ChargerModel) {
-        self.chargerTypeLabel.text = selecteCharger.chargerType
-        self.chargerStatusLabel.text = selecteCharger.status
+        self.chargerIdButton.setTitle(selecteCharger.chargerId!, for: .normal)
+        self.chargerStatusLabel.text = self.setChargerStatus(chargerStatus: selecteCharger.status!)
+        self.chargerTypeLabel.text =  self.setchargerType(chargerType: selecteCharger.chargerType!)
+    }
+    
+    func setChargerStatus(chargerStatus: String) -> String {
+        switch chargerStatus {
+        case "0":
+            return "예약중"
+        case "1":
+            return "통신이상"
+        case "2":
+            return "충전가능"
+        case "3":
+            return "충전중"
+        case "4":
+            return "운영중지"
+        case "5":
+            return "점검중"
+        case "9":
+            return "통신이상"
+        default:
+            return ""
+        }
+    }
+    
+    func setchargerType(chargerType: String) -> String {
+        switch chargerType  {
+        case "01":
+            return "DC차데모"
+        case "02":
+            return "AC완속"
+        case "03":
+            return "DC차데모+AC3상"
+        case "04":
+            return "DC콤보"
+        case "05":
+            return "DC차데모+DC콤보"
+        case "06":
+            return "DC차데모+AC3상+DC콤보"
+        case "07":
+            return "AC3상"
+        default:
+            return ""
+        }
     }
     
     func getChargers() {
@@ -25,11 +69,23 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
         }
     }
     
+    func checkChargerStationStatus(charger: ChargerModel) {
+        if let chargerStatus = charger.status {
+            if chargerStatus == "2" {
+                self.reservationButton.isEnabled = true
+            } else {
+                self.reservationButton.isEnabled = false
+            }
+        }
+    }
+    
     // MARK: - IBOutlets
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var chargerStationNameLabel: UILabel!
     @IBOutlet weak var chargerIdButton: UIButton!
     @IBOutlet weak var chargerTypeLabel: UILabel!
     @IBOutlet weak var chargerStatusLabel: UILabel!
+    @IBOutlet weak var reservationButton: UIButton!
     
     // MARK: - IBActions
     @IBAction func touchUpCancelButton(_ sender: UIButton) {
@@ -50,16 +106,22 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
         present(chargerIdPickerVC, animated: true, completion: nil)
     }
     
+    @IBAction func touchUpReservationButton(_ sender: UIButton) {
+        
+    }
+    
     // MARK: - Delegates And DataSource
     func pickChargerId(charger: ChargerModel) {
-        self.chargerIdButton.setTitle(charger.chargerId!, for: .normal)
-        setChargerInfo(selecteCharger: charger)
+        self.setChargerInfo(selecteCharger: charger)
+        self.checkChargerStationStatus(charger: charger)
     }
     
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.titleLabel.layer.cornerRadius = 6
         self.getChargers()
         self.chargerStationNameLabel.text = self.chargerStation.statName
     }
 }
+

@@ -21,7 +21,7 @@ class MyInfoViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func touchUpLogoutButton(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
     // MARK: - Delegates And DataSource

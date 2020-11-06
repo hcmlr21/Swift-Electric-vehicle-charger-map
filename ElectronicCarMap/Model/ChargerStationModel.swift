@@ -53,6 +53,7 @@ struct ChargerStationModel: Codable {
     var statId: String
     var statName: String
     var address: String
+    var availableChargerCount: Int
     var lat: String? //위도
     var lng: String?//경도
     var useTime: String?
@@ -60,7 +61,6 @@ struct ChargerStationModel: Codable {
     var busiName: String?
     var busiCall: String?
     var chargers: [ChargerModel]?
-    var availableChargerCount: Int?
 }
 
 struct ChargerModel: Codable {

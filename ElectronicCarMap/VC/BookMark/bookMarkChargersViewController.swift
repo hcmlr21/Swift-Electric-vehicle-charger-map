@@ -49,19 +49,24 @@ class bookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.bookMarkTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
+        guard let cell = self.bookMarkTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? BookMarkTableViewCell else {
+            return UITableViewCell()
+        }
+        
         let bookMarkChargerStationName = self.bookMarkChargerStationsName[indexPath.row]
         let statName = bookMarkChargerStationName
         
-        cell.textLabel?.text = statName
-        cell.imageView?.image = UIImage(named: "star")
-        
+        cell.chargerStationNameLabel.text = statName
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//        self.chargerDelegate?.onClikedChargerStation(chargerStationId: self.bookMarkChargerStationsId[indexPath.row])
+        //        self.chargerDelegate?.onClikedChargerStation(chargerStationId: self.bookMarkChargerStationsId[indexPath.row])
         let chargerStationDic: [String:String] = ["chargerStationId":self.bookMarkChargerStationsId[indexPath.row]]
         NotificationCenter.default.post(name: Notification.Name(bookMarkNotificationName), object: chargerStationDic)
         

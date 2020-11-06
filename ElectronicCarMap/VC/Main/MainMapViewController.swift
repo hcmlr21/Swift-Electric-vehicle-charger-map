@@ -32,16 +32,12 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     }
     
     func makeMap() {
-//        let infoWindow = NMFInfoWindow()
-//        let dataSource = NMFInfoWindowDefaultTextSource.data()
-//        dataSource.title = "정보 창 내용"
-//        infoWindow.dataSource = dataSource
-        
         let naverMapView = self.naverMapView!
         
         naverMapView.showCompass = true
         naverMapView.showLocationButton = true
         naverMapView.showZoomControls = true
+        naverMapView.showScaleBar = true
         
         let mapView = naverMapView.mapView
 //        let currentLocation = mapView.locationOverlay.location
@@ -64,11 +60,19 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         self.hideChargerInfoView()
     }
     
+    func setMarkerImage(charegrMarker: NMFMarker) {
+        charegrMarker.iconImage = NMFOverlayImage(name: "electronicMarker")
+        charegrMarker.width = NMF_MARKER_IMAGE_GRAY.imageWidth + 13
+        charegrMarker.height = NMF_MARKER_IMAGE_GRAY.imageHeight + 5
+        charegrMarker.captionText = self.chargerStation!.statName
+    }
+    
     func setLocationOverlay() {
         let mapView = self.naverMapView.mapView
         let lat = Double((self.chargerStation?.lat)!)!
         let lng = Double((self.chargerStation?.lng)!)!
         //마커의 위치 설정
+        self.setMarkerImage(charegrMarker: self.marker)
         self.marker.position = NMGLatLng(lat: lat, lng: lng)
         self.marker.mapView = mapView
         //맵의 위치 설정
@@ -95,17 +99,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         self.locationManager.delegate = self
     }
     
-    func hideChargerInfoView() {
-        self.chargerInfoView.isHidden = true
-        NSLayoutConstraint.deactivate(self.shownViewLayouts)
-        NSLayoutConstraint.activate(self.hiddenViewLayouts)
-    }
-    
     func setChargerInfoView() {
-//        @IBOutlet weak var statNameLabel: UILabel!
-//        @IBOutlet weak var statAddressLabel: UILabel!
-//        @IBOutlet weak var statStatusLabel: UILabel!
-//        @IBOutlet weak var statUseTimeLabel: UILabel!
 //        @IBOutlet weak var reservationButton: UIButton!
 //        @IBOutlet weak var statButton: UIButton!
 //        @IBOutlet weak var destinationButton: UIButton!
@@ -131,7 +125,15 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         
         self.statNameLabel.text = self.chargerStation?.statName
         self.statAddressLabel.text = self.chargerStation?.address
-//        self.statStatusLabel.text = self.chargerStation.
+        self.statUseTimeLabel.text = self.chargerStation?.useTime
+        if self.chargerStation!.availableChargerCount > 0 {
+            self.statStatusLabel.text = "충전가능"
+            self.chargerAvailableImageView.image = UIImage(named: "electronicMarker")
+        } else {
+            self.statStatusLabel.text = "충전불가능"
+            self.chargerAvailableImageView.image = UIImage(named: "unableElectronicMarker")
+        }
+        
 //        self.statUseTimeLabel
     }
     
@@ -141,14 +143,31 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         NSLayoutConstraint.deactivate(self.hiddenViewLayouts)
         NSLayoutConstraint.activate(self.shownViewLayouts)
     }
+
+    func hideChargerInfoView() {
+        self.chargerInfoView.isHidden = true
+        NSLayoutConstraint.deactivate(self.shownViewLayouts)
+        NSLayoutConstraint.activate(self.hiddenViewLayouts)
+    }
+    
+    func setChargerStationName(name: String) {
+        if name == "" {
+            self.searchBarButton.setTitleColor(#colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1), for: .normal)
+            self.searchBarButton.setTitle("  충전소 검색", for: .normal)
+        } else {
+            self.searchBarButton.setTitleColor(.black, for: .normal)
+            self.searchBarButton.setTitle("  " + name, for: .normal)
+        }
+    }
     
     func setChargerStation(JSONObj: Any) {
         do{
-            guard let jsonFormatedResponse = JSONObj as? NSDictionary, let chargerstation = jsonFormatedResponse["chargerStation"] else  { return }
+            guard let jsonFormatedResponse = JSONObj as? NSDictionary, let chargerStationObj = jsonFormatedResponse["chargerStation"] else  { return }
             //JSONObject를 JSONData로 바꿔주는 작업
-            let dataJSON = try JSONSerialization.data(withJSONObject: chargerstation, options: .prettyPrinted)
+            let dataJSON = try JSONSerialization.data(withJSONObject: chargerStationObj, options: .prettyPrinted)
             let chargerStation = try JSONDecoder().decode(ChargerStationModel.self, from: dataJSON)
             self.chargerStation = chargerStation
+            self.setChargerStationName(name: chargerStation.statName)
             self.showChargerInfoView()
             self.setLocationOverlay()
         } catch{
@@ -174,14 +193,16 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     @IBOutlet weak var chargerInfoView: UIView!
     //infoView
     @IBOutlet weak var statNameLabel: UILabel!
+    @IBOutlet weak var statBookMarkButton: UIButton!
     @IBOutlet weak var statAddressLabel: UILabel!
     @IBOutlet weak var statStatusLabel: UILabel!
+    @IBOutlet weak var chargerAvailableImageView: UIImageView!
     @IBOutlet weak var statUseTimeLabel: UILabel!
     @IBOutlet weak var reservationButton: UIButton!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var destinationButton: UIButton!
     @IBOutlet weak var infoCloseButton: UIButton!
-    @IBOutlet weak var statBookMarkButton: UIButton!
+    
     
     // MARK: - IBActions
     @IBAction func touchUpSearchBarButton(_ sender: UIButton) {
@@ -213,10 +234,9 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
             pathFinderVC.destinationInfo = chargerStationInfo
         }
         
-        present(pathFinderVC, animated: true, completion: nil)
+        present(pathFinderVC, animated: false, completion: nil)
         
     }
-    
     
     @IBAction func touchUpReservationButton(_ sender: UIButton) {
         let makingRservationVC = self.storyboard?.instantiateViewController(identifier: "makingReservationViewController") as! MakingReservationViewController

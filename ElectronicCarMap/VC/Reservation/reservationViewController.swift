@@ -15,11 +15,6 @@ class reservationViewController: UIViewController {
     
     // MARK: - Methods
     func makeMap() {
-        //        let infoWindow = NMFInfoWindow()
-        //        let dataSource = NMFInfoWindowDefaultTextSource.data()
-        //        dataSource.title = "정보 창 내용"
-        //        infoWindow.dataSource = dataSource
-        
         let naverMapView = self.naverMapView!
         
         naverMapView.showCompass = true
@@ -40,7 +35,6 @@ class reservationViewController: UIViewController {
         }
         
         marker.mapView = mapView
-        //        infoWindow.open(with: marker)
     }
     
     // MARK: - IBOutlets
@@ -56,6 +50,7 @@ class reservationViewController: UIViewController {
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.titleLabel.layer.cornerRadius = 6
         self.startGuideButton.layer.cornerRadius = 10
         self.cancelReservationButton.layer.cornerRadius = 10
