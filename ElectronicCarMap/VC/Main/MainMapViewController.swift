@@ -23,7 +23,7 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     let locationManager = CLLocationManager()
     var hiddenViewLayouts: [NSLayoutConstraint] = []
     var shownViewLayouts: [NSLayoutConstraint] = []
-    var baseUrl = "http://34.123.73.237:10010/chargerStation"
+    let baseUrl = "http://34.123.73.237:10010/chargerStation"
     let databaseRef = Database.database().reference()
     let myUid = Auth.auth().currentUser?.uid
     
@@ -36,6 +36,13 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         NotificationCenter.default.addObserver(self, selector: #selector(onClickedReservationCompleteButton), name: NSNotification.Name(reservationCompleteNotificationName), object: nil)
     }
     
+    func resetMap() {
+        self.marker.captionText = ""
+        self.marker.mapView = nil
+        self.hideChargerInfoView()
+        self.setChargerStationName(name: "")
+    }
+
     func makeMap() {
         let naverMapView = self.naverMapView!
         
@@ -43,6 +50,8 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         naverMapView.showLocationButton = true
         naverMapView.showZoomControls = true
         naverMapView.showScaleBar = true
+        
+        self.setMarkerImage(charegrMarker: self.marker)
         
         let mapView = naverMapView.mapView
 //        let currentLocation = mapView.locationOverlay.location
@@ -69,17 +78,18 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
         charegrMarker.iconImage = NMFOverlayImage(name: "electronicMarker")
         charegrMarker.width = NMF_MARKER_IMAGE_GRAY.imageWidth + 13
         charegrMarker.height = NMF_MARKER_IMAGE_GRAY.imageHeight + 5
-        charegrMarker.captionText = self.chargerStation!.statName
     }
     
     func setLocationOverlay() {
         let mapView = self.naverMapView.mapView
         let lat = Double((self.chargerStation?.lat)!)!
         let lng = Double((self.chargerStation?.lng)!)!
+        
+        self.marker.captionText = self.chargerStation!.statName
         //마커의 위치 설정
-        self.setMarkerImage(charegrMarker: self.marker)
         self.marker.position = NMGLatLng(lat: lat, lng: lng)
         self.marker.mapView = mapView
+        
         //맵의 위치 설정
         mapView.latitude = lat
         mapView.longitude = lng
@@ -285,6 +295,10 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
     }
     
     @objc func onClickedReservationCompleteButton(notification: NSNotification) {
+        //화면초기화
+        self.resetMap()
+        
+        
         self.tabBarController?.selectedIndex = 2
     }
     
@@ -294,14 +308,13 @@ class MainMapViewController: UIViewController, CLLocationManagerDelegate, charge
 //        self.setLocationOverlay(lat: Double(chargerStation.lat)!, lng: Double(chargerStation.lng)!)
         
 //        self.setLocationOverlay(lat: 35.512571, lng: 129.422104)
-        
     }
     
     func onClickedReservationButton() {
         let reservationCompleteVC = self.storyboard?.instantiateViewController(identifier: "reservationCompleteViewController") as! ReservationCompleteViewController
         reservationCompleteVC.modalPresentationStyle = .fullScreen
         
-        self.present(reservationCompleteVC, animated: true, completion: nil)
+        self.present(reservationCompleteVC, animated: false, completion: nil)
     }
     
     // MARK: - Life Cycles

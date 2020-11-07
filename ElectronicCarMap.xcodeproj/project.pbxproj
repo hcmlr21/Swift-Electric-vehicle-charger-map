@@ -27,6 +27,7 @@
 		48C84D82254571B500328ADF /* ChargerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D81254571B500328ADF /* ChargerStationModel.swift */; };
 		48C84D84254573B700328ADF /* MyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D83254573B700328ADF /* MyInfoViewController.swift */; };
 		48C84D862546F06200328ADF /* ChargerSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D852546F06200328ADF /* ChargerSearchViewController.swift */; };
+		48D03E452556705600DA565A /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D03E442556705600DA565A /* ReservationModel.swift */; };
 		48E5442025499BC100A0E888 /* chargerStationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E5441F25499BC100A0E888 /* chargerStationDelegate.swift */; };
 		48F43F4E2548112B0090F5B8 /* ReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F43F4D2548112B0090F5B8 /* ReservationViewController.swift */; };
 		48F43F50254811560090F5B8 /* BookMarkChargersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F43F4F254811560090F5B8 /* BookMarkChargersViewController.swift */; };
@@ -62,6 +63,7 @@
 		48C84D81254571B500328ADF /* ChargerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerStationModel.swift; sourceTree = "<group>"; };
 		48C84D83254573B700328ADF /* MyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyInfoViewController.swift; sourceTree = "<group>"; };
 		48C84D852546F06200328ADF /* ChargerSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerSearchViewController.swift; sourceTree = "<group>"; };
+		48D03E442556705600DA565A /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
 		48E5441F25499BC100A0E888 /* chargerStationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chargerStationDelegate.swift; sourceTree = "<group>"; };
 		48F43F4D2548112B0090F5B8 /* ReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewController.swift; sourceTree = "<group>"; };
 		48F43F4F254811560090F5B8 /* BookMarkChargersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkChargersViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				48C84D81254571B500328ADF /* ChargerStationModel.swift */,
 				48BA03FE254FE382002C8FDE /* UserModel.swift */,
 				4870A3E02552D93C0033215F /* AddressModel.swift */,
+				48D03E442556705600DA565A /* ReservationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */,
 				487ED646254BA69E0004999D /* AddressSearchViewController.swift */,
 				4855603C254C29C900668ACF /* MakingReservationViewController.swift */,
+				48C0E6AF255585DC007BBB1D /* ReservationCompleteViewController.swift */,
 				4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */,
 			);
 			path = Main;
@@ -182,7 +186,6 @@
 			isa = PBXGroup;
 			children = (
 				48F43F4D2548112B0090F5B8 /* ReservationViewController.swift */,
-				48C0E6AF255585DC007BBB1D /* ReservationCompleteViewController.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */,
 				48F43F50254811560090F5B8 /* BookMarkChargersViewController.swift in Sources */,
 				48C84D6825456C9E00328ADF /* SceneDelegate.swift in Sources */,
+				48D03E452556705600DA565A /* ReservationModel.swift in Sources */,
 				48F43F4E2548112B0090F5B8 /* ReservationViewController.swift in Sources */,
 				48C0E6B0255585DC007BBB1D /* ReservationCompleteViewController.swift in Sources */,
 				48E5442025499BC100A0E888 /* chargerStationDelegate.swift in Sources */,

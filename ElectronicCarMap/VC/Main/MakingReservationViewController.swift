@@ -8,18 +8,64 @@
 
 
 import UIKit
+import Alamofire
+import Firebase
 
 class MakingReservationViewController: UIViewController, UITextFieldDelegate, chargerStationDelegate {
     // MARK: - ProPerties
     var chargerDelegate: chargerStationDelegate?
     var chargerStation: ChargerStationModel!
     var chargers: [ChargerModel] = []
+    var selectedChager: ChargerModel?
+    let baseUrl = "http://34.123.73.237:10010/charger/"
+    let myUid = Auth.auth().currentUser?.uid
+    let databaseRef = Database.database().reference()
     
     // MARK: - Methods
     func setChargerInfo(selecteCharger: ChargerModel) {
         self.chargerIdButton.setTitle(selecteCharger.chargerId!, for: .normal)
         self.chargerStatusLabel.text = self.setChargerStatus(chargerStatus: selecteCharger.status!)
         self.chargerTypeLabel.text =  self.setchargerType(chargerType: selecteCharger.chargerType!)
+    }
+    
+    func setReservationResultToUserInfo(completion: @escaping () -> Void) {
+        let value = [
+            "reserved" : "true",
+            "chargerStationName": self.chargerStation.statName,
+            "chargerId": self.selectedChager!.chargerId!,
+            "lat": self.chargerStation.lat!,
+            "lng": self.chargerStation.lng!
+        ]
+        
+        self.databaseRef.child("users").child(self.myUid!).child("reservation").updateChildValues(value) { (error, databaseReference) in
+            if error == nil {
+                //성공
+                completion()
+            }
+        }
+    }
+    
+    func changeChargerStatus(completion: @escaping () -> Void) {
+        let chargerId = self.selectedChager!.chargerId!
+        let url = self.baseUrl + chargerId
+        let header: HTTPHeaders = [
+            "Content-Type": "application/json"
+        ]
+        
+        let param = [
+            "newStatus": "3"
+        ]
+        
+        AF.request(url, method: .patch, parameters: param, encoding: JSONEncoding.default, headers: header).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                self.setReservationResultToUserInfo {
+                    completion()
+                }
+            case .failure(let e):
+                print("예약실패", e.localizedDescription)
+            }
+        }
     }
     
     func setChargerStatus(chargerStatus: String) -> String {
@@ -98,22 +144,21 @@ class MakingReservationViewController: UIViewController, UITextFieldDelegate, ch
         chargerIdPickerVC.modalPresentationStyle = .overCurrentContext
         chargerIdPickerVC.modalTransitionStyle = .crossDissolve
         chargerIdPickerVC.chargerDelegate = self
-        var chargers: [ChargerModel] = []
-        for charger in self.chargers {
-            chargers.append(charger)
-        }
         
-        chargerIdPickerVC.chargers = chargers
+        chargerIdPickerVC.chargers = self.chargers
         present(chargerIdPickerVC, animated: true, completion: nil)
     }
     
     @IBAction func touchUpReservationButton(_ sender: UIButton) {
-        self.dismiss(animated: false, completion: nil)
-        self.chargerDelegate?.onClickedReservationButton()
+        self.changeChargerStatus {
+            self.dismiss(animated: false, completion: nil)
+            self.chargerDelegate?.onClickedReservationButton()
+        }
     }
     
     // MARK: - Delegates And DataSource
     func pickChargerId(charger: ChargerModel) {
+        self.selectedChager = charger
         self.setChargerInfo(selecteCharger: charger)
         self.checkChargerStationStatus(charger: charger)
     }
