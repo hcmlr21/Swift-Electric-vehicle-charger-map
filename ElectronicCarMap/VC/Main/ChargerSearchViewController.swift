@@ -10,13 +10,12 @@ import UIKit
 import Alamofire
 import SWXMLHash
 
-class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, chargerStationDelegate {
     // MARK: - ProPerties
+    var searchFilter: [Bool]?
+    var searched: Bool = false
     var chargerDelegate: chargerStationDelegate?
-//    let chargerKey = "?serviceKey=VSiTPgmdSow8suOp6MW6%2BIoHCZ9DU6kDloiZ3oDh6mCe%2Fr7FjD7A9Usupx6q0cOq1akSrizFlCkKhYchpNBm1w%3D%3D&" //전기차데이터 key
-//    let chargerBaseUrl2 = "http://open.ev.or.kr:8080/openapi/services/EvCharger/getChargerInfo"//전기차데이터1 url endpoint
-//    let chargerBaseUrl3 = "http://openapi.kepco.co.kr/service/EvInfoServiceV2/getEvSearchList"
-    let chargerBalseUrl = "http://34.123.73.237:10010/chargerStation"
+    let chargerStationBaseUrl = "http://34.123.73.237:10010/chargerStation"
     var searchedChargerStations: [ChargerStationModel] = []
     let cellIdentifier = "chargerCell"
     
@@ -27,11 +26,24 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
     
     func setChargerStations(JSONObj: Any) {
         do {
-            guard let jsonFormatedResponse = JSONObj as? NSDictionary, let chargerstations = jsonFormatedResponse["chargerStations"] else  { return }
+            guard let jsonFormatedResponse = JSONObj as? NSDictionary, let chargerStations = jsonFormatedResponse["chargerStations"] else  { return }
             
-            let dataJSON = try JSONSerialization.data(withJSONObject: chargerstations, options: .prettyPrinted)
+            let dataJSON = try JSONSerialization.data(withJSONObject: chargerStations, options: .prettyPrinted)
             let chargerStationsResult = try JSONDecoder().decode([ChargerStationModel].self, from: dataJSON)
-            self.searchedChargerStations = chargerStationsResult
+            
+            var filteredChargerStation: [ChargerStationModel] = []
+            if let _ = self.searchFilter {
+                for chargerStation in chargerStationsResult {
+                    if(chargerStation.availableChargerCount > 0) {
+                        filteredChargerStation.append(chargerStation)
+                    }
+                }
+                
+                self.searchedChargerStations = filteredChargerStation
+            } else {
+                self.searchedChargerStations = chargerStationsResult
+            }
+            
             self.chargerTableView.reloadData()
         } catch{
             print(error.localizedDescription)
@@ -50,7 +62,7 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
     }
     
     func getCharger(name: String, addr: String) {
-        let url = self.chargerBalseUrl
+        let url = self.chargerStationBaseUrl
         
         if (name == "") && (addr == "") {
             self.searchedChargerStations = []
@@ -59,6 +71,11 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
             let param = ["name": name, "address" : addr]
             self.requestChargerStations(url: url, param: param)
         }
+    }
+    
+    func showChargerStationInfoDetail() {
+        self.chargerTableView.rowHeight = 70
+        self.chargerTableView.reloadData()
     }
     
     // MARK: - IBOutlets
@@ -70,20 +87,47 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
         self.dismiss(animated: false, completion: nil)
     }
     
-    // MARK: - Delegates And DataSource
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
+    @IBAction func touchUpFilteringButton(_ sender: UIButton) {
+        let filterVC = self.storyboard?.instantiateViewController(identifier: "chargerStationSearchFilteringViewController") as! ChargerStationSearchFilteringViewController
+        filterVC.modalPresentationStyle = .fullScreen
+        
+        filterVC.chargerStationDelegate = self
+        filterVC.searchFilter = self.searchFilter
+        
+        present(filterVC, animated: true, completion: nil)
     }
     
+    // MARK: - Delegates And DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.searchedChargerStations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.chargerTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
+        guard let cell = self.chargerTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? ChargerSearchTableViewCell else {
+            return UITableViewCell()
+        }
         
-        let charger = self.searchedChargerStations[indexPath.row]
-        cell.textLabel?.text = charger.statName
+        let chargerStation = self.searchedChargerStations[indexPath.row]
+        
+        cell.chargerStationNameLabel.text = chargerStation.statName
+        
+        if !self.searched {
+            cell.chargerAddressLabel.isHidden = true
+            cell.chargerAddressLabel.text = ""
+        } else {
+            cell.chargerAddressLabel.isHidden = false
+            cell.chargerAddressLabel.text = chargerStation.address
+        }
+        
+        if chargerStation.availableChargerCount > 0 {
+            cell.chargerAvailableImageView.image = UIImage(named: "electronicMarker")
+            cell.chargerAvailableLabel.font = cell.chargerAvailableLabel.font.withSize(12)
+            cell.chargerAvailableLabel.text = "충전가능"
+        } else {
+            cell.chargerAvailableImageView.image = UIImage(named: "unableElectronicMarker")
+            cell.chargerAvailableLabel.font = cell.chargerAvailableLabel.font.withSize(10)
+            cell.chargerAvailableLabel.text = "충전불가능"
+        }
         
         return cell
     }
@@ -92,8 +136,25 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
         self.view.endEditing(true)
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.chargerTableView.rowHeight = 45
+        self.chargerSearchBar.becomeFirstResponder()
+        
+        self.searched = false
+        
+        self.chargerTableView.reloadData()
+    }
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.getCharger(name: searchText, addr: searchText)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        self.searched = true
+        
+        self.showChargerStationInfoDetail()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -102,11 +163,19 @@ class ChargerSearchViewController: UIViewController, UISearchBarDelegate, UITabl
         self.dismiss(animated: false, completion: nil)
     }
     
+    func setChargerStationSearchFilter(filter: [Bool]?) {
+        self.searchFilter = filter
+        self.chargerSearchBar.text = ""
+        self.getCharger(name: "", addr: "")
+    }
+    
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.chargerSearchBar.becomeFirstResponder()
+        
         self.chargerSearchBar.delegate = self
+        self.chargerTableView.rowHeight = 45
+        self.chargerSearchBar.becomeFirstResponder()
     }
 }
 

@@ -7,7 +7,10 @@
 //
 
 import UIKit
+import SafariServices
 import NMapsMap
+import Alamofire
+import KakaoSDKNavi
 
 class PathFinderViewController: UIViewController, chargerStationDelegate {
     // MARK: - ProPerties
@@ -19,6 +22,9 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
     var destinationMarker = NMFMarker()
     var hiddenViewLayouts: [NSLayoutConstraint] = []
     var shownViewLayouts: [NSLayoutConstraint] = []
+    let naverGeocodingKeyId = "iaf1r9n5ki"
+    let naverGeocodingKeyPass = "Sef6plir6Dz1baxmF2lbyTqtsorc2gQpup9FT3kc"
+    let pathOverlay = NMFPath()
     
     // MARK: - Methods
     func makeMap() {
@@ -61,6 +67,47 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
         present(addressVC, animated: false, completion: nil)
     }
     
+    func setPath(startLng: Double, startLat: Double, destinationLng: Double, destinationLat: Double) {
+        //경로 추가
+        let url = "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=\(startLng),\(startLat)&goal=\(destinationLng),\(destinationLat)"
+        
+        let header:HTTPHeaders = [
+            "X-NCP-APIGW-API-KEY-ID":self.naverGeocodingKeyId,
+            "X-NCP-APIGW-API-KEY":self.naverGeocodingKeyPass
+        ]
+        
+        AF.request(url, method: .get, headers: header).responseJSON { (response) in
+            switch response.result {
+            case .success(let JSONobj):
+                do {
+                    self.pathOverlay.mapView = nil
+                    
+                    let JSONData = try JSONSerialization.data(withJSONObject: JSONobj, options: .prettyPrinted)
+                    let responseResult = try
+                        JSONDecoder().decode(PathAPIResponse.self, from: JSONData)
+                    
+                    let paths = responseResult.route.traoptimal[0].path
+
+                    var NMGPaths: [NMGLatLng] = []
+                    
+                    for path in paths {
+                        let lng = path[0]
+                        let lat = path[1]
+                        NMGPaths.append(NMGLatLng(lat: lat, lng: lng))
+                    }
+                    
+                    self.pathOverlay.path = NMGLineString(points: NMGPaths)
+                    self.pathOverlay.color = .systemBlue
+                    self.pathOverlay.mapView = self.naverMapView.mapView
+                } catch(let e) {
+                    print(e.localizedDescription)
+                }
+            case .failure(let e):
+                print(e.localizedDescription)
+            }
+        }
+    }
+    
     func setDirection() {
         if let startInfo = self.startInfo, let destinationInfo = self.destinationInfo {
             self.startButton.setTitleColor(.black, for: .normal)
@@ -68,7 +115,7 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
             )
             self.startButton.setTitle("  " + startInfo["name"]!, for: .normal)
             self.destinationButton.setTitle("  " + destinationInfo["name"]!, for: .normal)
-         
+            
             let startLat = Double(startInfo["lat"]!)!
             let startLng = Double(startInfo["lng"]!)!
             self.setLocationOverlay(marker: self.startMarker, lat: startLat, lng: startLng)
@@ -87,7 +134,9 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
             cameraUpdate.animationDuration = 0.8
             self.naverMapView.mapView.moveCamera(cameraUpdate)
             
-            //경로 추가
+            print("st",startLat, "sg", startLng, "dt", destinationLat, "dg",destinationLng)
+            
+            self.setPath(startLng: startLng, startLat: startLat, destinationLng: destinationLng, destinationLat: destinationLat)
         } else {
             self.hideGuideStartButton()
             if let startInfo = self.startInfo {
@@ -117,8 +166,9 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
     
     func setMarkerImage(charegrMarker: NMFMarker, chargerInfo: [String:String]?, addrMarker: NMFMarker, addrInfo: [String:String]?) {
         charegrMarker.iconImage = NMFOverlayImage(name: "electronicMarker")
-        charegrMarker.width = NMF_MARKER_IMAGE_GRAY.imageWidth + 13
-        charegrMarker.height = NMF_MARKER_IMAGE_GRAY.imageHeight + 5
+        charegrMarker.width = NMF_MARKER_IMAGE_GRAY.imageWidth - 7
+        charegrMarker.height = NMF_MARKER_IMAGE_GRAY.imageHeight - 8
+        
         if let chargerInfo = chargerInfo {
             charegrMarker.captionText = chargerInfo["name"]!
         }
@@ -149,7 +199,7 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
         NSLayoutConstraint.deactivate(self.hiddenViewLayouts)
         NSLayoutConstraint.activate(self.shownViewLayouts)
     }
-
+    
     func hideGuideStartButton() {
         self.guideStartButton.isHidden = true
         NSLayoutConstraint.deactivate(self.shownViewLayouts)
@@ -176,6 +226,23 @@ class PathFinderViewController: UIViewController, chargerStationDelegate {
     
     @IBAction func touchUpCloseButton(_ sender: UIButton) {
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    @IBAction func touchUpGuidePathButton(_ sender: UIButton) {
+        let startName = self.startInfo!["name"]!
+        let startLng = self.startInfo!["lng"]!
+        let startLat = self.startInfo!["lat"]!
+          
+        let destinationName = self.startInfo!["name"]!
+        let destinationLng = self.startInfo!["lng"]!
+        let destinationLat = self.startInfo!["lat"]!
+
+        let options = NaviOption(coordType: .WGS84)
+        let destination = NaviLocation(name: destinationName, x: destinationLng, y: destinationLat)
+        let viaList = [NaviLocation(name: startName, x: startLng, y: startLat)]
+        let safariViewController = SFSafariViewController(url: NaviApi.shared.webNavigateUrl(destination: destination, option: options, viaList:viaList)!)
+        safariViewController.modalPresentationStyle = .fullScreen
+        self.present(safariViewController, animated: false, completion: nil)
     }
     
     // MARK: - Delegates And DataSource

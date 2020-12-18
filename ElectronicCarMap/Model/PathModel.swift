@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+struct PathAPIResponse: Codable {
+    var route: Route
+    
+    struct Route: Codable {
+        var traoptimal: [Traoptimal]
+        
+        struct Traoptimal: Codable {
+            var path:[[Double]]
+            
+        }
+    }
+}

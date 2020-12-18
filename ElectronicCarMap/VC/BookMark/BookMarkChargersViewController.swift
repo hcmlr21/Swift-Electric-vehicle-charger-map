@@ -17,6 +17,7 @@ class BookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
     var bookMarkChargerStationsName: [String] = []
     let databaseRef = Database.database().reference()
     let myUid = Auth.auth().currentUser?.uid
+    var editMode = false
     
     // MARK: - Methods
     func getBookMarkList() {
@@ -32,6 +33,12 @@ class BookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
             }
             
             DispatchQueue.main.async {
+                if self.bookMarkChargerStationsId.count > 0 {
+                    self.noListView.isHidden = true
+                } else {
+                    self.noListView.isHidden = false
+                }
+                
                 self.bookMarkTableView.reloadData()
             }
         }
@@ -39,9 +46,21 @@ class BookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
     
     // MARK: - IBOutlets
     @IBOutlet weak var bookMarkTableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noListView: UIView!
     
     // MARK: - IBActions
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBAction func touchUpEditButton(_ sender: UIButton) {
+        self.tableView.isEditing = !self.tableView.isEditing
+        
+        if self.tableView.isEditing {
+            self.editButton.setTitle("Done", for: .normal)
+        } else {
+            self.editButton.setTitle("Edit", for: .normal)
+        }
+    }
     
     // MARK: - Delegates And DataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,6 +89,27 @@ class BookMarkChargersViewController: UIViewController, UITableViewDelegate, UIT
         NotificationCenter.default.post(name: Notification.Name(bookMarkNotificationName), object: chargerStationDic)
         
         self.tabBarController?.selectedIndex = 0
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.self.databaseRef.child("users").child(self.myUid!).child("bookMark").child(self.bookMarkChargerStationsId[indexPath.row]).removeValue()
+            self.bookMarkChargerStationsId.remove(at: indexPath.row)
+            self.bookMarkChargerStationsName.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if self.tableView.isEditing {
+            return .delete
+        }
+        
+        return .none
     }
     
     // MARK: - Life Cycles

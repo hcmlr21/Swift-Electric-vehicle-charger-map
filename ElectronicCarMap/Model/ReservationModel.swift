@@ -14,4 +14,5 @@ class ReservationModel: NSObject {
     @objc var chargerId: String?
     @objc var lat: String?
     @objc var lng: String?
+    @objc var addr: String?
 }

@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SafariServices
 import NMapsMap
 import Firebase
 import Alamofire
+import KakaoSDKNavi
 
 class ReservationViewController: UIViewController {
     // MARK: - ProPerties
@@ -18,6 +20,7 @@ class ReservationViewController: UIViewController {
     let databaseRef = Database.database().reference()
     let myUid = Auth.auth().currentUser?.uid
     let baseUrl = "http://34.123.73.237:10010/charger/"
+    let marker = NMFMarker()
     
     // MARK: - Methods
     func checkReservation() {
@@ -36,13 +39,14 @@ class ReservationViewController: UIViewController {
         }
     }
     
-    func changeReservationResultToUserInfo() {
+    func sendCancelReservationResultToUserInfo() {
         let value = [
             "reserved" : "false",
             "chargerStationName": "",
             "chargerId": "",
             "lat":"",
-            "lng":""
+            "lng":"",
+            "addr":""
         ]
         
         self.databaseRef.child("users").child(self.myUid!).child("reservation").updateChildValues(value) { (error, databaseReference) in
@@ -56,6 +60,7 @@ class ReservationViewController: UIViewController {
         self.noInfoView.isHidden = true
         self.chargerStationNameLabel.text = self.reservationInfo?.chargerStationName
         self.chargerIdLabel.text = self.reservationInfo?.chargerId
+        self.addressLabel.text = self.reservationInfo?.addr
         self.setLocationOverlay()
     }
     
@@ -91,10 +96,10 @@ class ReservationViewController: UIViewController {
     func setLocationOverlay() {
         let mapView = naverMapView.mapView
         
-        //좌표
-        let marker = NMFMarker()
+        marker.mapView = nil
         if let lat = self.reservationInfo?.lat, let lng = self.reservationInfo?.lng {
             if let doubleLat = Double(lat), let doubleLng = Double(lng) {
+                
                 let coord = NMGLatLng(lat: doubleLat, lng: doubleLng)
                 mapView.latitude = doubleLat
                 mapView.longitude = doubleLng
@@ -113,20 +118,14 @@ class ReservationViewController: UIViewController {
     @IBOutlet weak var noInfoView: UIView!
     @IBOutlet weak var chargerStationNameLabel: UILabel!
     @IBOutlet weak var chargerIdLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
     
     // MARK: - IBActions
-    @IBAction func touch(_ sender: UIButton) {
-        let reservationCompleteVC = self.storyboard?.instantiateViewController(identifier: "reservationCompleteViewController") as! ReservationCompleteViewController
-        reservationCompleteVC.modalPresentationStyle = .fullScreen
-        
-        present(reservationCompleteVC, animated: true, completion: nil)
-    }
-    
     @IBAction func touchUpCancelReservation(_ sender: UIButton) {
         let alert = UIAlertController(title: "예약취소", message: "예약을 취소하시겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { (action) in
             self.changeReservationStatus {
-                self.changeReservationResultToUserInfo()
+                self.sendCancelReservationResultToUserInfo()
             }
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -134,6 +133,19 @@ class ReservationViewController: UIViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
+
+    @IBAction func touchUpGuidePathButton(_ sender: UIButton) {
+        let destinationName = self.reservationInfo!.chargerStationName!
+        let destinationLng = self.reservationInfo!.lng!
+        let destinationLat = self.reservationInfo!.lat!
+        
+        let options = NaviOption(coordType: .WGS84)
+        let destination = NaviLocation(name: destinationName, x: destinationLng, y: destinationLat)
+        let safariViewController = SFSafariViewController(url: NaviApi.shared.webNavigateUrl(destination: destination, option: options)!)
+        safariViewController.modalPresentationStyle = .fullScreen
+        self.present(safariViewController, animated: false, completion: nil)
+    }
+    
     
     // MARK: - Delegates And DataSource
     

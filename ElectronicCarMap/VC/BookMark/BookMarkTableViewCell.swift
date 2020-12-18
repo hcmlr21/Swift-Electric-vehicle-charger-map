@@ -9,13 +9,10 @@
 import UIKit
 
 class BookMarkTableViewCell: UITableViewCell {
-    // MARK: -IBOulet
-    
+    // MARK: - IBOulet
     @IBOutlet weak var starImageView: UIImageView!
     @IBOutlet weak var chargerStationNameLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 }

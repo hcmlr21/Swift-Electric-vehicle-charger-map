@@ -9,13 +9,18 @@
 /* Begin PBXBuildFile section */
 		4802AF3D254EBED40059223E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4802AF3C254EBED40059223E /* GoogleService-Info.plist */; };
 		4823D3002555339600498E56 /* BookMarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4823D2FF2555339600498E56 /* BookMarkTableViewCell.swift */; };
+		4837A338256FFB260036909B /* ChargerStationSearchFilteringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4837A337256FFB260036909B /* ChargerStationSearchFilteringViewController.swift */; };
+		484A6E38256836C000EEB550 /* NavigationWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484A6E37256836C000EEB550 /* NavigationWebViewController.swift */; };
+		484A6E3C25697FCB00EEB550 /* ChargerSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484A6E3B25697FCB00EEB550 /* ChargerSearchTableViewCell.swift */; };
 		4855603D254C29C900668ACF /* MakingReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4855603C254C29C900668ACF /* MakingReservationViewController.swift */; };
 		4867CD4A25519F1E00BB581D /* ChargerIdPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */; };
 		4870A3E12552D93C0033215F /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870A3E02552D93C0033215F /* AddressModel.swift */; };
 		4872399F254B9C7A00CF8294 /* PathFinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */; };
 		487ED647254BA69E0004999D /* AddressSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487ED646254BA69E0004999D /* AddressSearchViewController.swift */; };
+		48A94F4E2562AF3100349F40 /* PathModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A94F4D2562AF3100349F40 /* PathModel.swift */; };
 		48BA03FF254FE382002C8FDE /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BA03FE254FE382002C8FDE /* UserModel.swift */; };
 		48C0E6B0255585DC007BBB1D /* ReservationCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C0E6AF255585DC007BBB1D /* ReservationCompleteViewController.swift */; };
+		48C5F5CF255A701800690D8D /* MakingReservationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C5F5CE255A701800690D8D /* MakingReservationTableViewCell.swift */; };
 		48C84D6625456C9E00328ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D6525456C9E00328ADF /* AppDelegate.swift */; };
 		48C84D6825456C9E00328ADF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C84D6725456C9E00328ADF /* SceneDelegate.swift */; };
 		48C84D6D25456C9E00328ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48C84D6B25456C9E00328ADF /* Main.storyboard */; };
@@ -43,13 +48,18 @@
 		4832DB0C2549C41000BCCAB9 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		4832DB0E2549C41B00BCCAB9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4832DB102549C42300BCCAB9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4837A337256FFB260036909B /* ChargerStationSearchFilteringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerStationSearchFilteringViewController.swift; sourceTree = "<group>"; };
+		484A6E37256836C000EEB550 /* NavigationWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationWebViewController.swift; sourceTree = "<group>"; };
+		484A6E3B25697FCB00EEB550 /* ChargerSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerSearchTableViewCell.swift; sourceTree = "<group>"; };
 		4855603C254C29C900668ACF /* MakingReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingReservationViewController.swift; sourceTree = "<group>"; };
 		4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChargerIdPickerViewController.swift; sourceTree = "<group>"; };
 		4870A3E02552D93C0033215F /* AddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
 		4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathFinderViewController.swift; sourceTree = "<group>"; };
 		487ED646254BA69E0004999D /* AddressSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSearchViewController.swift; sourceTree = "<group>"; };
+		48A94F4D2562AF3100349F40 /* PathModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModel.swift; sourceTree = "<group>"; };
 		48BA03FE254FE382002C8FDE /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		48C0E6AF255585DC007BBB1D /* ReservationCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCompleteViewController.swift; sourceTree = "<group>"; };
+		48C5F5CE255A701800690D8D /* MakingReservationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakingReservationTableViewCell.swift; sourceTree = "<group>"; };
 		48C84D6225456C9E00328ADF /* ElectronicCarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ElectronicCarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48C84D6525456C9E00328ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48C84D6725456C9E00328ADF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +155,7 @@
 				48BA03FE254FE382002C8FDE /* UserModel.swift */,
 				4870A3E02552D93C0033215F /* AddressModel.swift */,
 				48D03E442556705600DA565A /* ReservationModel.swift */,
+				48A94F4D2562AF3100349F40 /* PathModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,9 +166,13 @@
 				48E5441F25499BC100A0E888 /* chargerStationDelegate.swift */,
 				48C84D7925456F1600328ADF /* MainMapViewController.swift */,
 				48C84D852546F06200328ADF /* ChargerSearchViewController.swift */,
+				484A6E3B25697FCB00EEB550 /* ChargerSearchTableViewCell.swift */,
+				4837A337256FFB260036909B /* ChargerStationSearchFilteringViewController.swift */,
 				4872399E254B9C7A00CF8294 /* PathFinderViewController.swift */,
 				487ED646254BA69E0004999D /* AddressSearchViewController.swift */,
+				484A6E37256836C000EEB550 /* NavigationWebViewController.swift */,
 				4855603C254C29C900668ACF /* MakingReservationViewController.swift */,
+				48C5F5CE255A701800690D8D /* MakingReservationTableViewCell.swift */,
 				48C0E6AF255585DC007BBB1D /* ReservationCompleteViewController.swift */,
 				4867CD4925519F1E00BB581D /* ChargerIdPickerViewController.swift */,
 			);
@@ -327,13 +342,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48C5F5CF255A701800690D8D /* MakingReservationTableViewCell.swift in Sources */,
 				48C84D7D25456F3D00328ADF /* LoginViewController.swift in Sources */,
 				4855603D254C29C900668ACF /* MakingReservationViewController.swift in Sources */,
+				484A6E38256836C000EEB550 /* NavigationWebViewController.swift in Sources */,
 				48C84D7A25456F1600328ADF /* MainMapViewController.swift in Sources */,
 				48C84D862546F06200328ADF /* ChargerSearchViewController.swift in Sources */,
 				4872399F254B9C7A00CF8294 /* PathFinderViewController.swift in Sources */,
+				4837A338256FFB260036909B /* ChargerStationSearchFilteringViewController.swift in Sources */,
 				4823D3002555339600498E56 /* BookMarkTableViewCell.swift in Sources */,
+				484A6E3C25697FCB00EEB550 /* ChargerSearchTableViewCell.swift in Sources */,
 				4867CD4A25519F1E00BB581D /* ChargerIdPickerViewController.swift in Sources */,
+				48A94F4E2562AF3100349F40 /* PathModel.swift in Sources */,
 				48C84D82254571B500328ADF /* ChargerStationModel.swift in Sources */,
 				48C84D84254573B700328ADF /* MyInfoViewController.swift in Sources */,
 				48C84D6625456C9E00328ADF /* AppDelegate.swift in Sources */,

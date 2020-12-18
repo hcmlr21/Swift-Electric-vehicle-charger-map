@@ -105,6 +105,10 @@ PODS:
   - GoogleUtilities/UserDefaults (6.7.2):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.4.0)
+  - KakaoSDKCommon (2.0.4):
+    - Alamofire (~> 5.1)
+  - KakaoSDKNavi (2.0.4):
+    - KakaoSDKCommon (= 2.0.4)
   - leveldb-library (1.22)
   - nanopb (1.30906.0):
     - nanopb/decode (= 1.30906.0)
@@ -127,6 +131,7 @@ DEPENDENCIES:
   - Firebase/Messaging
   - Firebase/RemoteConfig
   - Firebase/Storage
+  - KakaoSDKNavi
   - NMapsMap
   - SHSearchBar
   - SWXMLHash (~> 5.0.0)
@@ -151,6 +156,8 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
+    - KakaoSDKCommon
+    - KakaoSDKNavi
     - leveldb-library
     - nanopb
     - NMapsMap
@@ -178,6 +185,8 @@ SPEC CHECKSUMS:
   GoogleDataTransport: f56af7caa4ed338dc8e138a5d7c5973e66440833
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  KakaoSDKCommon: 070472d0638ea6b28684a23c195e47015349e51b
+  KakaoSDKNavi: 698659afffcd6d069febe0d1eab7a2dc524697f5
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   NMapsMap: 17caab4af9a3fc5c25b79858de18bdeab1eaff87
@@ -187,6 +196,6 @@ SPEC CHECKSUMS:
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: ce93006a0df010f09c588b0d792948fb4ee7ff2b
+PODFILE CHECKSUM: dc04d275585f8e0c2932271d4d756072f4b59963
 
 COCOAPODS: 1.9.3

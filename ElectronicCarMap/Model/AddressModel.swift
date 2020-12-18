@@ -13,7 +13,7 @@ struct AddrResponse: Codable {
 }
 
 struct Results: Codable {
-//    var common: Common?
+
     var juso: [Juso]?
 }
 

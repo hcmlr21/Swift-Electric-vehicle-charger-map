@@ -9,16 +9,22 @@
 import UIKit
 
 class ChargerSearchTableViewCell: UITableViewCell {
-
+    // MARK: - ProPerties
+    
+    // MARK: - Methods
+    
+    // MARK: - IBOutlets
+    @IBOutlet weak var chargerStationNameLabel: UILabel!
+    @IBOutlet weak var chargerAddressLabel: UILabel!
+    @IBOutlet weak var chargerAvailableImageView: UIImageView!
+    @IBOutlet weak var chargerAvailableLabel: UILabel!
+    
+    // MARK: - IBActions
+    
+    // MARK: - Delegates And DataSource
+    
+    // MARK: - Life Cycles
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

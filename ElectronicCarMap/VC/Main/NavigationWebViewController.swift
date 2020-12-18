@@ -7,24 +7,40 @@
 //
 
 import UIKit
+import WebKit
+import KakaoSDKNavi
 
 class NavigationWebViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    // MARK: - ProPerties
+    
+    // MARK: - Methods
+    func showNavi() {
+        let destination = NaviLocation(name: "카카오판교오피스", x: "321286", y: "533707")
+        let viaList = [NaviLocation(name: "판교역 1번출구", x: "321525", y: "532951")]
+//        let safariViewController = SFSafariViewController(url: NaviApi.shared.webNavigateUrl(destination: destination, viaList:viaList)!)
+//        safariViewController.modalTransitionStyle = .crossDissolve
+//        safariViewController.modalPresentationStyle = .overCurrentContext
+//        self.present(safariViewController, animated: true) {
+//            print("웹안내 present success")
+//        }
+        self.naviWebView.load(URLRequest(url: NaviApi.shared.webNavigateUrl(destination: destination, viaList:viaList)!))
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - IBOutlets
+    @IBOutlet weak var naviWebView: WKWebView!
+    
+    // MARK: - IBActions
+    
+    // MARK: - Delegates And DataSource
+    
+    // MARK: - Life Cycles
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
-    */
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.showNavi()
+    }
 
 }

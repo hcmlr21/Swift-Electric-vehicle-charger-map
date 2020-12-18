@@ -13,6 +13,7 @@ protocol chargerStationDelegate {
     func onClickedAddress(spotInfo:[String:String])
     func pickChargerId(charger: ChargerModel)
     func onClickedReservationButton()
+    func setChargerStationSearchFilter(filter: [Bool]?)
 }
 
 extension chargerStationDelegate {
@@ -30,6 +31,10 @@ extension chargerStationDelegate {
     }
     
     func onClickedReservationButton() {
+        
+    }
+    
+    func setChargerStationSearchFilter(filter: [Bool]?) {
         
     }
 }

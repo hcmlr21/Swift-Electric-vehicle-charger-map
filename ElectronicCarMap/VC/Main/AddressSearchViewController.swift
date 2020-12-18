@@ -11,17 +11,17 @@ import Alamofire
 
 class AddressSearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     // MARK: - ProPerties
+    var searched: Bool = false
     var chargerDelegate: chargerStationDelegate?
     let roadAddrKey = "devU01TX0FVVEgyMDIwMTEwNDIxMjkyNzExMDM3MTQ="
-    let keyId = "iaf1r9n5ki"
-    let keyPass = "Sef6plir6Dz1baxmF2lbyTqtsorc2gQpup9FT3kc"
+    let naverGeocodingKeyId = "iaf1r9n5ki"
+    let naverGeocodingKeyPass = "Sef6plir6Dz1baxmF2lbyTqtsorc2gQpup9FT3kc"
     let cellIdentifier = "addressCell"
+    var searchedAddrs: [String:[Juso]] = ["buildingAddrs":[], "roadAddrs":[]]
+    var spotInfo: [String:String] = [:]
     let addressSearchCilentId = "gUJ5HvMoYGrUx1pznTyd"
     let addressSearchClientSecret = "O7fz4Y_E8p"
     let baseUrl = "https://openapi.naver.com/v1/search/local.json"
-    var searchedAddrs: [Juso] = []
-    var coord: [String: String]?
-    var spotInfo: [String:String] = [:]
     
     // MARK: - Methods
     func setSearchedAddresses(JSONObj: Any) {
@@ -30,7 +30,17 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
                 return }
             let dataJSON = try JSONSerialization.data(withJSONObject: addrs, options: .prettyPrinted)
             let addrsResult = try JSONDecoder().decode([Juso].self, from: dataJSON)
-            self.searchedAddrs = addrsResult
+            
+            self.searchedAddrs["buildingAddrs"]!.removeAll()
+            self.searchedAddrs["roadAddrs"]!.removeAll()
+            for addr in addrsResult {
+                if addr.bdNm != "" {
+                    self.searchedAddrs["buildingAddrs"]?.append(addr)
+                } else {
+                    self.searchedAddrs["roadAddrs"]?.append(addr)
+                }
+                    
+            }
             
             self.addressTableView.reloadData()
         } catch(let e) {
@@ -39,8 +49,9 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func requestAddress(addrKeyword: String) {
-        if addrKeyword.count < 2 {
-            self.searchedAddrs = []
+        if (addrKeyword.count < 2) {
+            self.searchedAddrs["buildingAddrs"]!.removeAll()
+            self.searchedAddrs["roadAddrs"]!.removeAll()
             self.addressTableView.reloadData()
         } else {
             let baseUrl = "http://www.juso.go.kr/addrlink/addrLinkApi.do"
@@ -66,8 +77,8 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
     func requestOverlay(addr: String) {
         let url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
         let header:HTTPHeaders = [
-            "X-NCP-APIGW-API-KEY-ID":self.keyId,
-            "X-NCP-APIGW-API-KEY":self.keyPass
+            "X-NCP-APIGW-API-KEY-ID":self.naverGeocodingKeyId,
+            "X-NCP-APIGW-API-KEY":self.naverGeocodingKeyPass
         ]
         let pram = ["query": addr]
         
@@ -93,6 +104,11 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    func showChargerStationInfoDetail() {
+        self.addressTableView.rowHeight = 70
+        self.addressTableView.reloadData()
+    }
+    
     // MARK: - IBOutlets
     @IBOutlet weak var addressTableView: UITableView!
     @IBOutlet weak var addressSearchBar: UISearchBar!
@@ -107,14 +123,48 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
         return true
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            if self.searchedAddrs["buildingAddrs"]!.count > 0 {
+//                return "빌딩"
+            }
+        } else if section == 1 {
+            if self.searchedAddrs["roadAddrs"]!.count > 0 {
+                return "  "
+            }
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.searchedAddrs.count
+        if section == 0 {
+            return self.searchedAddrs["buildingAddrs"]!.count
+        } else  if section == 1 {
+            return self.searchedAddrs["roadAddrs"]!.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.addressTableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath)
-        let address = self.searchedAddrs[indexPath.row]
-        cell.textLabel?.text = address.bdNm
+        if indexPath.section == 0 {
+            let address = self.searchedAddrs["buildingAddrs"]![indexPath.row]
+            cell.textLabel?.text = address.bdNm
+            if !self.searched {
+                cell.detailTextLabel?.text = ""
+            } else {
+                cell.detailTextLabel?.text = address.roadAddrPart1
+            }
+        } else if indexPath.section == 1 {
+            let address = self.searchedAddrs["roadAddrs"]![indexPath.row]
+            cell.textLabel?.text = address.roadAddrPart1
+            cell.detailTextLabel?.text = ""
+        }
         
         return cell
     }
@@ -123,21 +173,47 @@ class AddressSearchViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.endEditing(true)
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.addressTableView.rowHeight = 45
+        self.addressSearchBar.becomeFirstResponder()
+        
+        self.searched = false
+        
+        self.addressTableView.reloadData()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.requestAddress(addrKeyword: searchText)
+        if(!searchText.trimmingCharacters(in: .whitespaces).isEmpty || searchText == "") {
+            self.requestAddress(addrKeyword: searchText)
+        }
+        
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        self.searched = true
+        
+        self.showChargerStationInfoDetail()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let addr = self.searchedAddrs[indexPath.row]
-        self.spotInfo["name"] = addr.bdNm
-        self.requestOverlay(addr: self.searchedAddrs[indexPath.row].roadAddrPart1!)
+        if indexPath.section == 0 {
+            let addr = self.searchedAddrs["buildingAddrs"]![indexPath.row]
+            self.spotInfo["name"] = addr.bdNm
+            self.requestOverlay(addr: addr.roadAddrPart1!)
+        } else if indexPath.section == 1 {
+            let addr = self.searchedAddrs["roadAddrs"]![indexPath.row]
+            self.spotInfo["name"] = addr.roadAddrPart1
+            self.requestOverlay(addr: addr.roadAddrPart1!)
+        }
     }
     
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addressSearchBar.delegate = self
+        self.addressTableView.rowHeight = 45
         self.addressSearchBar.becomeFirstResponder()
     }
 }

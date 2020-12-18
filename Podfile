@@ -17,6 +17,7 @@ target 'ElectronicCarMap' do
         pod 'Firebase/Auth'
         pod 'Firebase/Storage'
         pod 'Firebase/Messaging'
+	pod 'KakaoSDKNavi'
   # Pods for ElectronicCarMap
 
 end
